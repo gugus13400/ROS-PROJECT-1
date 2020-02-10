@@ -90,7 +90,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
     def search(self, startCoords, goalCoords):
 
         # Make sure the queue is empty. We do this so that we can keep calling
-        # the same method multiple times and have it work.
+        # the same method multiple times and have it work. 22
         while (self.isQueueEmpty() == False):
             self.popCellFromQueue()
         
