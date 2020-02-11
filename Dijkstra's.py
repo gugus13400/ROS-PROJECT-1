@@ -14,7 +14,6 @@ class FIFOPlanner(CellBasedForwardSearch):
     def __init__(self, title, occupancyGrid):
         CellBasedForwardSearch.__init__(self, title, occupancyGrid)
         self.fifoQueue = deque()
-        self.counter = 0
 
     # Simply put on the end of the queue
     def pushCellOntoQueue(self, cell):
@@ -27,8 +26,11 @@ class FIFOPlanner(CellBasedForwardSearch):
     # Simply pull from the front of the list
     def popCellFromQueue(self):
         cell = self.fifoQueue.popleft()
-        self.counter += 1
+        return cell
 
     def resolveDuplicate(self, cell, parentCell):
         # Nothing to do in self case
+        pass
+
+    def resolveDuplicate(self, cell):
         pass
