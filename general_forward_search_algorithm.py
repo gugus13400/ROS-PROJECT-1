@@ -14,10 +14,10 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
     # This class implements the basic framework for LaValle's general
     # template for forward search. It includes a lot of methods for
     # managing the graphical output as well.
-    
+
     def __init__(self, title, occupancyGrid):
         PlannerBase.__init__(self, title, occupancyGrid)
-         
+
         # Flag to store if the last plan was successful
         self.goalReached = None
 
@@ -55,33 +55,33 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
     # immediate neighbours have been visited.
     def markCellAsDead(self, cell):
         cell.label = CellLabel.DEAD
-    
+
     # Handle the case that a cell has been visited already.
     def resolveDuplicate(self, cell):
         raise NotImplementedError()
-    
+
     # Compute the additive cost of performing a step from the parent to the
     # current cell. This calculation is carried out the same way no matter
     # what heuristics, etc. are used. The cost computed here takes account
     # of the terrain traversability cost using an equation a bit like that
     # presented in the lectures.
-    def computeLStageAdditiveCost(self, parentCell, cell):       
+    def computeLStageAdditiveCost(self, parentCell, cell):
         # If the parent is empty, this is the start of the path and the
         # cost is 0.
         if (parentCell is None):
             return 0
-        
+
         # Travel cost is Cartesian distance
         dX = cell.coords[0] - parentCell.coords[0]
         dY = cell.coords[1] - parentCell.coords[1]
-        # Terrain cost 
+        # Terrain cost
         #  Run this in matlab to visualise ro check the image
         # However, basically it builds up extremely quickly
         # x=[1:0.01:2];
-        # c=min(1+(.2./((1.7-x).^2)).^2,1000);       
+        # c=min(1+(.2./((1.7-x).^2)).^2,1000);
         cost=min(1+(0.2/((1.75-cell.terrainCost)**2))**2, 1000)
         L = sqrt(dX * dX + dY * dY)*cost# Multiplied by the terrain cost of the cell
-        
+
         return L
         
     # The main search routine. The routine searches for a path between a given
@@ -90,7 +90,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
     def search(self, startCoords, goalCoords):
 
         # Make sure the queue is empty. We do this so that we can keep calling
-        # the same method multiple times and have it work. 22
+        # the same method multiple times and have it work.
         while (self.isQueueEmpty() == False):
             self.popCellFromQueue()
 
@@ -181,16 +181,16 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
 
         # Construct the path object and mark if the goal was reached
         path = PlannedPath()
-        
+
         path.goalReached = self.goalReached
-        
+
         # Initial condition - the goal cell
         path.waypoints.append(pathEndCell)
-               
+
         # Start at the goal and find the parent. Find the cost associated with the parent
         cell = pathEndCell.parent
         path.travelCost = self.computeLStageAdditiveCost(pathEndCell.parent, pathEndCell)
-        
+
         # Iterate back through and extract each parent in turn and add
         # it to the path. To work out the travel length along the
         # path, you'll also have to add self at self stage.
@@ -198,7 +198,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
             path.waypoints.appendleft(cell)
             path.travelCost = path.travelCost + self.computeLStageAdditiveCost(cell.parent, cell)
             cell = cell.parent
-            
+
         # Update the stats on the size of the path
         path.numberOfWaypoints = len(path.waypoints)
 
@@ -209,13 +209,13 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
 
         print "Path travel cost = " + str(path.travelCost)
         print "Path cardinality = " + str(path.numberOfWaypoints)
-        
+
         # Draw the path if requested
         if (self.showGraphics == True):
             self.plannerDrawer.update()
             self.plannerDrawer.drawPathGraphicsWithCustomColour(path, colour)
             self.plannerDrawer.waitForKeyPress()
-        
+
         # Return the path
         return path
 
@@ -229,6 +229,6 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
     # Extract the path between the start and goal.
     def extractPathToGoal(self):
         path = self.extractPathEndingAtCell(self.goal, 'yellow')
-       
+
         return path
-            
+
