@@ -35,6 +35,6 @@ class DIJKSTRAPlanner(CellBasedForwardSearch):
         if nextCell.pathCost < cell.pathCost + self.computeLStageAdditiveCost(nextCell, cell):
             self.popCellFromQueue(nextCell)
             nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell)  # compute the distance between the current 'cell' and the 'nextcell'.
-            nextCell.parent = cell
+            self.markCellAsVisitedAndRecordParent(nextCell, cell)
             self.numberOfCellsVisited = self.numberOfCellsVisited + 1
             self.pushCellOntoQueue(nextCell)
