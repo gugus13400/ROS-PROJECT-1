@@ -33,6 +33,7 @@ class DIJKSTRAPlanner(CellBasedForwardSearch):
 
     def resolveDuplicate(self, nextCell, cell):
         if nextCell.pathCost < cell.pathCost + self.computeLStageAdditiveCost(nextCell, cell):
+            self.popCellFromQueue(nextCell)
             nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell)  # compute the distance between the current 'cell' and the 'nextcell'.
             nextCell.parent = cell
             self.numberOfCellsVisited = self.numberOfCellsVisited + 1
