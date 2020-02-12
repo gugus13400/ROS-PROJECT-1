@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from general_forward_search_algorithm import GeneralForwardSearchAlgorithm
+from general_forward_search_algorithm_dijkstra import GeneralForwardSearchAlgorithmDijkstra
 from collections import deque
 from cell import *
 
@@ -60,3 +61,7 @@ class CellBasedForwardSearch(GeneralForwardSearchAlgorithm):
     def hasCellBeenVisitedAlready(self, cell):
         return (cell.label == CellLabel.OBSTRUCTED) | (cell.label == CellLabel.DEAD) \
             | (cell.label == CellLabel.ALIVE)
+
+    # def costToGO(self, cell):
+    #     self.cell = cell
+    #     self.costToGO(self.cell) = float("inf")

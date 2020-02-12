@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+from general_forward_search_algorithm import GeneralForwardSearchAlgorithm
 from occupancy_grid import OccupancyGrid
 from search_grid import SearchGrid
 from planner_base import PlannerBase
@@ -8,16 +8,18 @@ from cell import *
 from planned_path import PlannedPath
 from math import *
 import rospy
+from Queue import PriorityQueue
 
-class GeneralForwardSearchAlgorithm(PlannerBase):
+
+class GeneralForwardSearchAlgorithmDijkstra(GeneralForwardSearchAlgorithm):
 
     # This class implements the basic framework for LaValle's general
     # template for forward search. It includes a lot of methods for
     # managing the graphical output as well.
-    
+
     def __init__(self, title, occupancyGrid):
         PlannerBase.__init__(self, title, occupancyGrid)
-         
+
         # Flag to store if the last plan was successful
         self.goalReached = None
 
@@ -55,39 +57,41 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
     # immediate neighbours have been visited.
     def markCellAsDead(self, cell):
         cell.label = CellLabel.DEAD
-    
+
     # Handle the case that a cell has been visited already.
     def resolveDuplicate(self, cell):
         raise NotImplementedError()
-    
+
     # Compute the additive cost of performing a step from the parent to the
     # current cell. This calculation is carried out the same way no matter
     # what heuristics, etc. are used. The cost computed here takes account
     # of the terrain traversability cost using an equation a bit like that
     # presented in the lectures.
-    def computeLStageAdditiveCost(self, parentCell, cell):       
+    def computeLStageAdditiveCost(self, parentCell, cell):
         # If the parent is empty, this is the start of the path and the
         # cost is 0.
         if (parentCell is None):
             return 0
-        
+
         # Travel cost is Cartesian distance
         dX = cell.coords[0] - parentCell.coords[0]
         dY = cell.coords[1] - parentCell.coords[1]
-        # Terrain cost 
+        # Terrain cost
         #  Run this in matlab to visualise ro check the image
         # However, basically it builds up extremely quickly
         # x=[1:0.01:2];
-        # c=min(1+(.2./((1.7-x).^2)).^2,1000);       
-        cost=min(1+(0.2/((1.75-cell.terrainCost)**2))**2, 1000)
-        L = sqrt(dX * dX + dY * dY)*cost# Multiplied by the terrain cost of the cell
-        
+        # c=min(1+(.2./((1.7-x).^2)).^2,1000);
+        cost = min(1 + (0.2 / ((1.75 - cell.terrainCost) ** 2)) ** 2, 1000)
+        L = sqrt(dX * dX + dY * dY) * cost  # Multiplied by the terrain cost of the cell
+
         return L
-        
+
     # The main search routine. The routine searches for a path between a given
     # set of coordinates. These are then converted into start and destination
     # cells in the search grid and the search algorithm is then run.
     def search(self, startCoords, goalCoords):
+
+        #NEED TO SET THE COST TO GO OF EVERY CELL TO INFINITY
 
         # Make sure the queue is empty. We do this so that we can keep calling
         # the same method multiple times and have it work. 22
@@ -105,7 +109,8 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         # path cost to 0.
         self.start = self.searchGrid.getCellFromCoords(startCoords)
         self.start.label = CellLabel.START
-        self.start.pathCost = 0
+
+        self.start.pathCost = 0   #------> NEED TO BE SET ( C in class example)
 
         # Get the goal cell object and label it.
         self.goal = self.searchGrid.getCellFromCoords(goalCoords)
@@ -119,8 +124,11 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         self.resetGraphics()
 
         # Insert the start on the queue to start the process going.
+
+        #we want general case, not only start as we will be expanding from nextCell. NOT SURE
         self.markCellAsVisitedAndRecordParent(self.start, None)
         self.pushCellOntoQueue(self.start)
+        # USE PRIORITY QUEUE
 
         # Reset the count
         self.numberOfCellsVisited = 0
@@ -137,36 +145,56 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
             # planner from hanging.
             if rospy.is_shutdown():
                 return False
-            
-            cell = self.popCellFromQueue()
+
+            cell = self.popCellFromQueue() #should be equal to the cell with smallest pathCost or startcell and alive
+            if cell.label != CellLabel.ALIVE:
+                continue
+
+
             if (self.hasGoalBeenReached(cell) == True):
                 self.goalReached = True
                 break
+
             cells = self.getNextSetOfCellsToBeVisited(cell)
             for nextCell in cells:
-                if (self.hasCellBeenVisitedAlready(nextCell) == False):
-                    self.markCellAsVisitedAndRecordParent(nextCell, cell)
-                    self.pushCellOntoQueue(nextCell)
-                    self.numberOfCellsVisited = self.numberOfCellsVisited + 1
-                else:
-                    self.resolveDuplicate(nextCell, cell)
+                # if (self.hasCellBeenVisitedAlready(nextCell) == False):
+
+                    if nextCell.pathCost > cell.pathCost + self.computeLStageAdditiveCost(nextCell, cell):
+                        nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell, cell) #compute the distance between the current 'cell' and the 'nextcell'.
+                        nextCell.parent = cell
+                        cell.updateQueue(nextCell)
+
+                        # self.numberOfCellsVisited = self.numberOfCellsVisited + 1
+                # else:
+                #     self.resolveDuplicate(nextCell, cell)
+                #     if nextCell.costToGo < nextCellcurrentPathCost:
+                #         nextCellcurrentPathCost = nextCeell.costToGo
+                #         nextCell.parent = cell
+                #         update priority queue with nextCellcurrentPathCost
+                #put the nextCell.costToGo in the priority Queue, do that for every next cell around to order them from lowest to highest
+
 
             # Now that we've checked all the actions for this cell,
             # mark it as dead
             self.markCellAsDead(cell)
+
+            #GO TO NEXT CLOSEST CELL
 
             # Draw the update if required
             self.drawCurrentState()
 
         # Do a final draw to make sure that the graphics are shown, even at the end state
         self.drawCurrentState()
-        
-        print "numberOfCellsVisited = " + str(self.numberOfCellsVisited)
-        
+
+        print
+        "numberOfCellsVisited = " + str(self.numberOfCellsVisited)
+
         if self.goalReached:
-            print "Goal reached"
+            print
+            "Goal reached"
         else:
-            print "Goal not reached"
+            print
+            "Goal not reached"
 
         return self.goalReached
 
@@ -181,16 +209,16 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
 
         # Construct the path object and mark if the goal was reached
         path = PlannedPath()
-        
+
         path.goalReached = self.goalReached
-        
+
         # Initial condition - the goal cell
         path.waypoints.append(pathEndCell)
-               
+
         # Start at the goal and find the parent. Find the cost associated with the parent
         cell = pathEndCell.parent
         path.travelCost = self.computeLStageAdditiveCost(pathEndCell.parent, pathEndCell)
-        
+
         # Iterate back through and extract each parent in turn and add
         # it to the path. To work out the travel length along the
         # path, you'll also have to add self at self stage.
@@ -198,7 +226,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
             path.waypoints.appendleft(cell)
             path.travelCost = path.travelCost + self.computeLStageAdditiveCost(cell.parent, cell)
             cell = cell.parent
-            
+
         # Update the stats on the size of the path
         path.numberOfWaypoints = len(path.waypoints)
 
@@ -207,15 +235,17 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         if path.goalReached is False:
             path.travelCost = float("inf")
 
-        print "Path travel cost = " + str(path.travelCost)
-        print "Path cardinality = " + str(path.numberOfWaypoints)
-        
+        print
+        "Path travel cost = " + str(path.travelCost)
+        print
+        "Path cardinality = " + str(path.numberOfWaypoints)
+
         # Draw the path if requested
         if (self.showGraphics == True):
             self.plannerDrawer.update()
             self.plannerDrawer.drawPathGraphicsWithCustomColour(path, colour)
             self.plannerDrawer.waitForKeyPress()
-        
+
         # Return the path
         return path
 
@@ -229,6 +259,6 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
     # Extract the path between the start and goal.
     def extractPathToGoal(self):
         path = self.extractPathEndingAtCell(self.goal, 'yellow')
-       
+
         return path
-            
+
