@@ -146,6 +146,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
             for nextCell in cells:
                 if (self.hasCellBeenVisitedAlready(nextCell) == False):
                     self.markCellAsVisitedAndRecordParent(nextCell, cell)
+                    nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell)  # compute the distance between the current 'cell' and the 'nextcell'.
                     self.pushCellOntoQueue(nextCell)
                     self.numberOfCellsVisited = self.numberOfCellsVisited + 1
                 else:
