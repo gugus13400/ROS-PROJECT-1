@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from queue import PriorityQueue
+from Queue import PriorityQueue
 
 from cell_based_forward_search import CellBasedForwardSearch, CellLabel
 from collections import deque
