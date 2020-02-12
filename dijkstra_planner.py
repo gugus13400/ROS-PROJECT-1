@@ -26,7 +26,7 @@ class DIJKSTRAPlanner(CellBasedForwardSearch):
     def isQueueEmpty(self):
         return not self.dijkstraQueue
 
-    # Simply pull from the front of the list
+    # Simply pull from the front of the list1
     def popCellFromQueue(self):
         cell = self.dijkstraQueue.get()
         return cell
