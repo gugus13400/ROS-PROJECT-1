@@ -248,15 +248,18 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         # it to the path. To work out the travel length along the
         # path, you'll also have to add self at self stage.
         while (cell is not None):
-            caca = cell.parent
-            path.waypoints.appendleft(cell)
-            path.travelCost = path.travelCost + self.computeLStageAdditiveCost(cell.parent, cell)
-            print 'hihi'
-            pathAngle += self.computeAngle(pathEndCell, cell, caca)
-            print'The path angle is'
-            print(pathAngle)
-            print(pathAngle)
-            cell = cell.parent
+            try:
+                caca = cell.parent
+                path.waypoints.appendleft(cell)
+                path.travelCost = path.travelCost + self.computeLStageAdditiveCost(cell.parent, cell)
+                print 'hihi'
+                pathAngle += self.computeAngle(pathEndCell, cell, caca)
+                print'The path angle is'
+                print(pathAngle)
+                print(pathAngle)
+                cell = cell.parent
+            except:
+                pass
 
         # Update the stats on the size of the path
         path.numberOfWaypoints = len(path.waypoints)
