@@ -41,7 +41,7 @@ class DIJKSTRAPlanner(CellBasedForwardSearch):
         if nextCell.pathCost < cell.pathCost + self.computeLStageAdditiveCost(nextCell, cell):
             self.popCellFromQueue()
             print'pipicaca'
-            print(self.pushCellOntoQueue())
+            print(self.popCellFromQueue())
             print'pipicaca'
             nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell)  # compute the distance between the current 'cell' and the 'nextcell'.
             nextCell.parent = cell
