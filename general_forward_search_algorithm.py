@@ -127,7 +127,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
 
         # Indicates if we reached the goal or not
         self.goalReached = False
-        print ' la '
+        # print ' la '
 
         # Iterate until we have run out of live cells to try or we reached the goal.
         # This is the main computational loop and is the implementation of
@@ -139,17 +139,17 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
             if rospy.is_shutdown():
                 return False
 
-            print'1'
+            # print'1'
             
             cell = self.popCellFromQueue()
             print(cell)
 
-            print '55'
+            # print '55'
             if (self.hasGoalBeenReached(cell) == True):
                 self.goalReached = True
                 break
 
-            print 'caca'
+            # print 'caca'
             cells = self.getNextSetOfCellsToBeVisited(cell)
             for nextCell in cells:
                 if (self.hasCellBeenVisitedAlready(nextCell) == False):
@@ -158,10 +158,10 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
                     nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell)  ###### DIJKSTRA ###### compute the distance between the current 'cell' and the 'nextcell'.
 
                     #nextCell.pathCost = self.computeLStageAdditiveCost(nextCell, self.goal)#########GREEEEEEEEEEEEEEEEEEEEEEDY########
-                    print ' THIS ONE'
+                    # print ' THIS ONE'
                     self.pushCellOntoQueue(nextCell) #push the cell information ( cell name + distance to goal in the priority queue)
                     self.numberOfCellsVisited = self.numberOfCellsVisited + 1
-                    print 'I AM HERE'
+                    # print 'I AM HERE'
                 else:
                     self.resolveDuplicate(nextCell, cell)
 
