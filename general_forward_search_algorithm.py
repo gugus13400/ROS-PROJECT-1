@@ -249,9 +249,10 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         while (cell is not None):
 
                 print(type(cell))
-                print(type(caca))
+
                 path.waypoints.appendleft(cell)
                 caca = cell.parent
+                print(type(caca))
                 if (caca == None):
                     break
                 path.travelCost = path.travelCost + self.computeLStageAdditiveCost(cell.parent, cell)
