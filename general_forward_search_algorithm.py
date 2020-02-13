@@ -142,6 +142,8 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
             print'1'
             
             cell = self.popCellFromQueue()
+
+            print '55'
             if (self.hasGoalBeenReached(cell) == True):
                 self.goalReached = True
                 break
