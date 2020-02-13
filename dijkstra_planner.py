@@ -51,5 +51,6 @@ class DIJKSTRAPlanner(CellBasedForwardSearch):
             self.numberOfCellsVisited = self.numberOfCellsVisited + 1
             print(self.numberOfCellsVisited)
             print ' push cell onto queue is :'
+            print(nextCell)
             print(self.pushCellOntoQueue(nextCell))
             self.pushCellOntoQueue(nextCell)
