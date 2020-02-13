@@ -258,9 +258,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
             print("la")
 
             pathAngle += self.computeAngle(pathEndCell, cell, cell.parent)
-            print(“The
-            path
-            angle is”.format(pathAngle))
+            print("The path angle is".format(pathAngle))
 
             cell = cell.parent
 
