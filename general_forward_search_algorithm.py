@@ -242,7 +242,6 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
             pathAngle += self.computeAngle(pathEndCell, cell, cell.parent)
 
             cell = cell.parent
-            print("The total path Angle is {}".format(pathAngle))
 
         # Update the stats on the size of the path
         path.numberOfWaypoints = len(path.waypoints)
@@ -251,6 +250,8 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         # Therefore, if we didn't reach the goal, change it to infinity
         if path.goalReached is False:
             path.travelCost = float("inf")
+
+        print("The total path Angle is {}".format(pathAngle))
 
         print "Path travel cost = " + str(path.travelCost)
         print "Path cardinality = " + str(path.numberOfWaypoints)
