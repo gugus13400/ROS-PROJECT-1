@@ -33,7 +33,7 @@ class DIJKSTRAPlanner(CellBasedForwardSearch):
     # Simply pull from the front of the list1
     def popCellFromQueue(self):
         cell = self.dijkstraQueue.get()
-        return cell
+        return cell[1]
         # cell = self.fifoQueue.popleft()
         # return cell
 
