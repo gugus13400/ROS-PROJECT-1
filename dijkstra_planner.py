@@ -39,6 +39,7 @@ class DIJKSTRAPlanner(CellBasedForwardSearch):
 
     def resolveDuplicate(self, nextCell, cell):
         if nextCell.pathCost < cell.pathCost + self.computeLStageAdditiveCost(nextCell, cell):
+            print(nextCell.pathCost)
             self.popCellFromQueue()
             print'pipicaca'
             print(self.popCellFromQueue())
