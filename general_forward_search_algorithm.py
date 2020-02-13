@@ -145,9 +145,9 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
             print(cell)
 
             print '55'
-            if (self.hasGoalBeenReached(cell) == True):
-                self.goalReached = True
-                break
+            # if (self.hasGoalBeenReached(cell) == True):
+            #     self.goalReached = True
+            #     break
 
             print 'caca'
             cells = self.getNextSetOfCellsToBeVisited(cell)
