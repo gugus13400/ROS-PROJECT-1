@@ -73,9 +73,10 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         sqrt_1 = sqrt((x_vector_coordinate * x_vector_coordinate) + (y_vector_coordinate * y_vector_coordinate))
         sqrt_2 = sqrt( (x_vector_coordinate_parent *  x_vector_coordinate_parent) + (y_vector_coordinate_parent * y_vector_coordinate_parent))
 
-        self.angle = acos(( vector_a + vector_b)  / (sqrt_1 * sqrt_2))
+        self.angle_rad = acos(( vector_a + vector_b)  / (sqrt_1 * sqrt_2))
+        self.angle_deg = degrees(self.angle_rad)
 
-        return self.angle
+        return self.angle_deg
 
     # Compute the additive cost of performing a step from the parent to the
     # current cell. This calculation is carried out the same way no matter
