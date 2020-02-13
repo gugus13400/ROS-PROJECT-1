@@ -15,20 +15,26 @@ class DIJKSTRAPlanner(CellBasedForwardSearch):
 
     # Construct the new planner object
     def __init__(self, title, occupancyGrid):
+        # CellBasedForwardSearch.__init__(self, title, occupancyGrid)
+        # self.dijkstraQueue = PriorityQueue()
         CellBasedForwardSearch.__init__(self, title, occupancyGrid)
-        self.dijkstraQueue = PriorityQueue()
+        self.fifoQueue = deque()
 
     # Simply put on the end of the queue
     def pushCellOntoQueue(self, cell):
-        self.dijkstraQueue.put((cell.pathCost, cell))
+        # self.dijkstraQueue.put((cell.pathCost, cell))
+        self.fifoQueue.append(cell)
 
     # Check the queue size is zero
     def isQueueEmpty(self):
-        return not self.dijkstraQueue
+        # return not self.dijkstraQueue
+        return not self.fifoQueue
 
     # Simply pull from the front of the list1
     def popCellFromQueue(self):
-        cell = self.dijkstraQueue.get()
+        # cell = self.dijkstraQueue.get()
+        # return cell
+        cell = self.fifoQueue.popleft()
         return cell
 
     def resolveDuplicate(self, nextCell, cell):
