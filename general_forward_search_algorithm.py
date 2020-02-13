@@ -253,7 +253,8 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
             path.travelCost = path.travelCost + self.computeLStageAdditiveCost(cell.parent, cell)
             print 'hihi'
             pathAngle += self.computeAngle(pathEndCell, cell, caca)
-            print'ntm'
+            print'The path angle is'
+            print(pathAngle)
             print(pathAngle)
             cell = cell.parent
 
