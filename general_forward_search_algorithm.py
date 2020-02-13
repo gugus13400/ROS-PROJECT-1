@@ -73,13 +73,15 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
 
             sqrt_1 = sqrt((x_vector_coordinate * x_vector_coordinate) + (y_vector_coordinate * y_vector_coordinate))
             sqrt_2 = sqrt( (x_vector_coordinate_parent *  x_vector_coordinate_parent) + (y_vector_coordinate_parent * y_vector_coordinate_parent))
-
+            print('the cell coord is: x')
             print(cell.coords[0])
-            print(cell.coords[1])
-            print(cell)
-            print(parentParentCell)
 
+            print('the cell coord is: y')
+            print(cell.coords[1])
+
+            print('the parentparentcell coord is: x')
             print(parentParentCell.coords[0])
+            print('the parentparentcell coord is: x')
             print(parentParentCell.coords[1])
 
             print(sqrt_2)
