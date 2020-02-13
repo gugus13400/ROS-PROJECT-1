@@ -73,19 +73,6 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
 
         sqrt_1 = sqrt((x_vector_coordinate * x_vector_coordinate) + (y_vector_coordinate * y_vector_coordinate))
         sqrt_2 = sqrt( (x_vector_coordinate_parent *  x_vector_coordinate_parent) + (y_vector_coordinate_parent * y_vector_coordinate_parent))
-        print('the cell coord is: x')
-        print(cell.coords[0])
-
-        print('the cell coord is: y')
-        print(cell.coords[1])
-
-        print('the parentparentcell coord is: x')
-        print(parentParentCell.coords[0])
-        print('the parentparentcell coord is: x')
-        print(parentParentCell.coords[1])
-
-        print(sqrt_2)
-        print(sqrt_1)
 
         self.angle_rad = acos(( vector_a + vector_b)  / (sqrt_1 * sqrt_2))
         self.angle_deg = degrees(self.angle_rad)
@@ -246,22 +233,36 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         # Iterate back through and extract each parent in turn and add
         # it to the path. To work out the travel length along the
         # path, you'll also have to add self at self stage.
+        # while (cell is not None):
+        #     if (cell.parent == None):
+        #         break
+        #
+        #     print(type(cell))
+        #     path.waypoints.appendleft(cell)
+        #     path.travelCost = path.travelCost + self.computeLStageAdditiveCost(cell.parent, cell)
+        #     pathAngle += self.computeAngle(pathEndCell, cell, cell.parent)
+        #     cell = cell.parent
+        #
+        # # Update the stats on the size of the path
+        # path.numberOfWaypoints = len(path.waypoints)
+
         while (cell is not None):
-            if (cell.parent == None):
-                break
 
             print(type(cell))
 
             path.waypoints.appendleft(cell)
-            path.travelCost = path.travelCost + self.computeLStageAdditiveCost(cell.parent, cell)
-            print 'hihi'
-            pathAngle += self.computeAngle(pathEndCell, cell, cell.parent)
-            print'The path angle is'
-            print(pathAngle)
-            cell = cell.parent
 
-        # Update the stats on the size of the path
-        path.numberOfWaypoints = len(path.waypoints)
+            if (cell.parent == None):
+                break
+            path.travelCost = path.travelCost + self.computeLStageAdditiveCost(cell.parent, cell)
+            print(“la”)
+
+            pathAngle += self.computeAngle(pathEndCell, cell, cell.parent)
+            print(“The
+            path
+            angle is”.format(pathAngle))
+
+            cell = cell.parent
 
         # Note that if we failed to reach the goal, the above mechanism computes a path length of 0.
         # Therefore, if we didn't reach the goal, change it to infinity
