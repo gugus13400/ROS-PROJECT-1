@@ -60,12 +60,12 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
     def resolveDuplicate(self, nextCell, cell):
         raise NotImplementedError()
 
-    def computeAngle(self, cell, parentCell, parentParentCell):
-        x_vector_coordinate = cell.coords[0] - parentCell.coords[0]
-        y_vector_coordinate = cell.coords[1] - parentCell.coords[1]
+    def computeAngle(self, pathEndCell, cell, parentParentCell):
+        x_vector_coordinate = pathEndCell.coords[0] - cell.coords[0]
+        y_vector_coordinate = pathEndCell.coords[1] - cell.coords[1]
 
-        x_vector_coordinate_parent = parentCell.coords[0] - parentParentCell.coords[0]
-        y_vector_coordinate_parent = parentCell.coords[1] - parentParentCell.coords[1]
+        x_vector_coordinate_parent = cell.coords[0] - parentParentCell.coords[0]
+        y_vector_coordinate_parent = cell.coords[1] - parentParentCell.coords[1]
 
         vector_a = x_vector_coordinate * x_vector_coordinate_parent
         vector_b = y_vector_coordinate * y_vector_coordinate_parent
