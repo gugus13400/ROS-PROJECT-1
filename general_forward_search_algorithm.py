@@ -237,6 +237,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
             print 'hihi'
             pathAngle += self.computeAngle(pathEndCell, cell, parentParentCell)
             print'ntm'
+            print(pathAngle)
             cell = cell.parent
 
         # Update the stats on the size of the path
