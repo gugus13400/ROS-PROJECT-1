@@ -249,6 +249,8 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         # path, you'll also have to add self at self stage.
         while (cell is not None):
                 caca = cell.parent
+                print(type(cell))
+                print(type(caca))
                 path.waypoints.appendleft(cell)
                 path.travelCost = path.travelCost + self.computeLStageAdditiveCost(cell.parent, cell)
                 print 'hihi'
