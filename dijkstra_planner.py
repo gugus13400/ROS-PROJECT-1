@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from Queue import PriorityQueue
 
-from cell_based_forward_search import CellBasedForwardSearch, CellLabel
+from cell_based_forward_search import CellBasedForwardSearch
 from collections import deque
 
 # This class implements the FIFO - or breadth first search - planning
