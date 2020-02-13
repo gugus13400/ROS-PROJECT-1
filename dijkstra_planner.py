@@ -8,7 +8,7 @@ from collections import deque
 # algorithm. It works by using a double ended queue: cells are pushed
 # onto the back of the queue, and are popped from the front of the
 # queue.
-from search_grid import SearchGrid
+
 
 
 class DIJKSTRAPlanner(CellBasedForwardSearch):
