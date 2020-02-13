@@ -59,7 +59,7 @@ class CellBasedForwardSearch(GeneralForwardSearchAlgorithm):
 
     # This method determines whether a cell has been visited already.
     def hasCellBeenVisitedAlready(self, cell):
-        return (cell.label == CellLabel.OBSTRUCTED) | (cell.label == CellLabel.DEAD) \
+        return (cell.label == CellLabel.OBSTRUCTED) | (cell.label == CellLabel.DEAD) \                   #NOT SURE
             | (cell.label == CellLabel.ALIVE)
 
     # def costToGO(self, cell):

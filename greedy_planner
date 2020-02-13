@@ -11,30 +11,25 @@ from collections import deque
 from search_grid import SearchGrid
 
 
-class DIJKSTRAPlanner(CellBasedForwardSearch):
+class GREEDYPlanner(CellBasedForwardSearch):
 
     # Construct the new planner object
     def __init__(self, title, occupancyGrid):
         CellBasedForwardSearch.__init__(self, title, occupancyGrid)
-        self.dijkstraQueue = PriorityQueue()
+        self.greedyQueue = PriorityQueue()
 
     # Simply put on the end of the queue
     def pushCellOntoQueue(self, cell):
-        self.dijkstraQueue.put((cell.pathCost, cell))
+        self.greedyQueue.put((cell.pathCost, cell))
 
     # Check the queue size is zero
     def isQueueEmpty(self):
-        return not self.dijkstraQueue
+        return not self.greedyQueue
 
     # Simply pull from the front of the list1
     def popCellFromQueue(self):
-        cell = self.dijkstraQueue.get()
+        cell = self.greedyQueue.get()
         return cell
 
     def resolveDuplicate(self, nextCell, cell):
-        if nextCell.pathCost < cell.pathCost + self.computeLStageAdditiveCost(nextCell, cell):
-            self.popCellFromQueue(nextCell)
-            nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell)  # compute the distance between the current 'cell' and the 'nextcell'.
-            nextCell.parent = cell
-            self.numberOfCellsVisited = self.numberOfCellsVisited + 1
-            self.pushCellOntoQueue(nextCell)
+        pass
