@@ -252,7 +252,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
                 print(type(caca))
                 path.waypoints.appendleft(cell)
                 caca = cell.parent
-                if (caca = None):
+                if (caca == None):
                     break
                 path.travelCost = path.travelCost + self.computeLStageAdditiveCost(cell.parent, cell)
                 print 'hihi'
