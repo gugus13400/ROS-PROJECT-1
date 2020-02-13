@@ -26,6 +26,7 @@ class FIFOPlanner(CellBasedForwardSearch):
     # Simply pull from the front of the list
     def popCellFromQueue(self):
         cell = self.fifoQueue.popleft()
+        return cell
 
     def resolveDuplicate(self, cell, parentCell):
         # Nothing to do in self case
