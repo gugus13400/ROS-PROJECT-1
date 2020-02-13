@@ -251,7 +251,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         if path.goalReached is False:
             path.travelCost = float("inf")
 
-        print("The total path Angle is {}".format(pathAngle))
+        print("The total path Angle is {} degrees".format(pathAngle))
 
         print "Path travel cost = " + str(path.travelCost)
         print "Path cardinality = " + str(path.numberOfWaypoints)
