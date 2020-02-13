@@ -164,7 +164,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
                     print 'I AM HERE'
                 else:
                     self.resolveDuplicate(nextCell, cell)
-                    print 'proute'
+
 
             # Now that we've checked all the actions for this cell,
             # mark it as dead
