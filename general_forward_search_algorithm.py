@@ -259,7 +259,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
                 print(pathAngle)
                 cell = cell.parent
             except:
-                pass
+                continue
 
         # Update the stats on the size of the path
         path.numberOfWaypoints = len(path.waypoints)
