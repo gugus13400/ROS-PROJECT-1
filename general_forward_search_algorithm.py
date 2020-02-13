@@ -230,7 +230,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
 
         # Initial condition - the goal cell
         path.waypoints.append(pathEndCell)
-        celle = pathEndCell.parent
+
         # Start at the goal and find the parent. Find the cost associated with the parent
         cell = pathEndCell.parent
         parentParentCell = cell.parent
@@ -243,13 +243,14 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         # it to the path. To work out the travel length along the
         # path, you'll also have to add self at self stage.
         while (cell is not None):
-            path.waypoints.appendleft(celle)
-            path.travelCost = path.travelCost + self.computeLStageAdditiveCost(cell.parent, celle)
+            caca = cell.parent
+            path.waypoints.appendleft(cell)
+            path.travelCost = path.travelCost + self.computeLStageAdditiveCost(cell.parent, cell)
             print 'hihi'
-            pathAngle += self.computeAngle(pathEndCell, cell, parentParentCell)
+            pathAngle += self.computeAngle(pathEndCell, cell, caca)
             print'ntm'
             print(pathAngle)
-            celle = cell.parent
+            cell = cell.parent
 
         # Update the stats on the size of the path
         path.numberOfWaypoints = len(path.waypoints)
