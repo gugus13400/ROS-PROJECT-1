@@ -46,9 +46,10 @@ class DIJKSTRAPlanner(CellBasedForwardSearch):
             self.popCellFromQueue()
             print'pop cell from queue is'
             print(self.popCellFromQueue())
-            print'pipicaca'
             nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell)  # compute the distance between the current 'cell' and the 'nextcell'.
             nextCell.parent = cell
             self.numberOfCellsVisited = self.numberOfCellsVisited + 1
             print(self.numberOfCellsVisited)
+            print ' push cell onto queue is :'
+            print(self.pushCellOntoQueue(nextCell))
             self.pushCellOntoQueue(nextCell)
