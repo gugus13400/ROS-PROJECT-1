@@ -91,7 +91,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         print 'poppopopopopopopopopopopopopopopo'
         # Make sure the queue is empty. We do this so that we can keep calling
         # the same method multiple times and have it work.
-        while (self.isQueueEmpty() == True):
+        while (self.isQueueEmpty() == False):
             self.popCellFromQueue()
         print 'pipipipipip'
         # Create or update the search grid from the occupancy grid and seed
@@ -132,7 +132,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         # Iterate until we have run out of live cells to try or we reached the goal.
         # This is the main computational loop and is the implementation of
         # LaValle's pseudocode
-        while (self.isQueueEmpty() == True):
+        while (self.isQueueEmpty() == False):   #FALSEFPR F
 
             # Check if ROS is shutting down; if so, abort. This stops the
             # planner from hanging.
