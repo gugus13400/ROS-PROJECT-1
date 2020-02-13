@@ -181,7 +181,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
 
                     self.pushCellOntoQueue(nextCell) #push the cell information ( cell name + distance to goal in the priority queue)
                     self.numberOfCellsVisited = self.numberOfCellsVisited + 1
-                elif (nextCell.label == CellLabel.ALIVE | nextCell.label == CellLabel.DEAD):
+                elif (nextCell.label == CellLabel.ALIVE or nextCell.label == CellLabel.DEAD):
                     self.resolveDuplicate(nextCell, cell)
 
 
