@@ -64,8 +64,8 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         x_vector_coordinate = cell.coords[0] - parentCell.coords[0]
         y_vector_coordinate = cell.coords[1] - parentCell.coords[1]
 
-        x_vector_coordinate_parent = parentcell.coords[0] - parentParentCell.coords[0]
-        y_vector_coordinate_parent = parentcell.coords[1] - parentParentCellCell.coords[1]
+        x_vector_coordinate_parent = parentCell.coords[0] - parentParentCell.coords[0]
+        y_vector_coordinate_parent = parentCell.coords[1] - parentParentCell.coords[1]
 
         vector_a = x_vector_coordinate * x_vector_coordinate_parent
         vector_b = y_vector_coordinate * y_vector_coordinate_parent
