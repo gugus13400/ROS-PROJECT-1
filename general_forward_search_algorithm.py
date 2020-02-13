@@ -131,7 +131,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         # Iterate until we have run out of live cells to try or we reached the goal.
         # This is the main computational loop and is the implementation of
         # LaValle's pseudocode
-        while self.isQueueEmpty():
+        while (self.isQueueEmpty() == False):
 
             # Check if ROS is shutting down; if so, abort. This stops the
             # planner from hanging.
@@ -147,9 +147,9 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
                 if (self.hasCellBeenVisitedAlready(nextCell) == False):
                     self.markCellAsVisitedAndRecordParent(nextCell, cell)
 
-                    #nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell)  ###### DIJKSTRA ###### compute the distance between the current 'cell' and the 'nextcell'.
+                    nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell)  ###### DIJKSTRA ###### compute the distance between the current 'cell' and the 'nextcell'.
 
-                    nextCell.pathCost = self.computeLStageAdditiveCost(nextCell, self.goal)#########GREEEEEEEEEEEEEEEEEEEEEEDY########
+                    #nextCell.pathCost = self.computeLStageAdditiveCost(nextCell, self.goal)#########GREEEEEEEEEEEEEEEEEEEEEEDY########
                     print ' THIS ONE'
                     self.pushCellOntoQueue(nextCell) #push the cell information ( cell name + distance to goal in the priority queue)
                     self.numberOfCellsVisited = self.numberOfCellsVisited + 1
