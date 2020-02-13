@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from general_forward_search_algorithm import GeneralForwardSearchAlgorithm
-from general_forward_search_algorithm_dijkstra import GeneralForwardSearchAlgorithmDijkstra
 from collections import deque
 from cell import *
 
@@ -59,7 +58,7 @@ class CellBasedForwardSearch(GeneralForwardSearchAlgorithm):
 
     # This method determines whether a cell has been visited already.
     def hasCellBeenVisitedAlready(self, cell):
-        return (cell.label == CellLabel.OBSTRUCTED) | (cell.label == CellLabel.DEAD) \                   #NOT SURE
+        return (cell.label == CellLabel.OBSTRUCTED) | (cell.label == CellLabel.DEAD) \
             | (cell.label == CellLabel.ALIVE)
 
     # def costToGO(self, cell):
