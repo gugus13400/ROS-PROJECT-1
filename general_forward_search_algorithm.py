@@ -75,6 +75,8 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
 
         print(cell.coords[0])
         print(cell.coords[1])
+        print(cell)
+        print(parentParentCell)
 
         print(parentParentCell.coords[0])
         print(parentParentCell.coords[1])
