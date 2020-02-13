@@ -27,7 +27,7 @@ class DIJKSTRAPlanner(CellBasedForwardSearch):
 
     # Check the queue size is zero
     def isQueueEmpty(self):
-        return not self.dijkstraQueue
+        return not self.dijkstraQueue.empty()
         # return not self.fifoQueue
 
     # Simply pull from the front of the list1
