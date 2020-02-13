@@ -131,7 +131,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         # Iterate until we have run out of live cells to try or we reached the goal.
         # This is the main computational loop and is the implementation of
         # LaValle's pseudocode
-        while (self.isQueueEmpty() == False):
+        while self.isQueueEmpty():
 
             # Check if ROS is shutting down; if so, abort. This stops the
             # planner from hanging.
