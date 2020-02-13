@@ -235,10 +235,9 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
             path.waypoints.appendleft(cell)
             path.travelCost = path.travelCost + self.computeLStageAdditiveCost(cell.parent, cell)
             print 'hihi'
-            pathAngle += self.computeAngle(cell, celle, parent)
+            pathAngle += self.computeAngle(pathEndCell, cell, parentParentCell)
             print'ntm'
             cell = cell.parent
-            parent = celle.parent
 
         # Update the stats on the size of the path
         path.numberOfWaypoints = len(path.waypoints)
