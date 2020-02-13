@@ -91,7 +91,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
             self.angle_deg = degrees(self.angle_rad)
 
             return self.angle_deg
-        except: type(parentParentCell) == None
+        except type(parentParentCell) == None:
             pass
 
     # Compute the additive cost of performing a step from the parent to the
