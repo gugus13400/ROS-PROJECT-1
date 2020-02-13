@@ -61,38 +61,37 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         raise NotImplementedError()
 
     def computeAngle(self, pathEndCell, cell, parentParentCell):
-        try:
-            x_vector_coordinate = pathEndCell.coords[0] - cell.coords[0]
-            y_vector_coordinate = pathEndCell.coords[1] - cell.coords[1]
 
-            x_vector_coordinate_parent = cell.coords[0] - parentParentCell.coords[0]
-            y_vector_coordinate_parent = cell.coords[1] - parentParentCell.coords[1]
+        x_vector_coordinate = pathEndCell.coords[0] - cell.coords[0]
+        y_vector_coordinate = pathEndCell.coords[1] - cell.coords[1]
 
-            vector_a = x_vector_coordinate * x_vector_coordinate_parent
-            vector_b = y_vector_coordinate * y_vector_coordinate_parent
+        x_vector_coordinate_parent = cell.coords[0] - parentParentCell.coords[0]
+        y_vector_coordinate_parent = cell.coords[1] - parentParentCell.coords[1]
 
-            sqrt_1 = sqrt((x_vector_coordinate * x_vector_coordinate) + (y_vector_coordinate * y_vector_coordinate))
-            sqrt_2 = sqrt( (x_vector_coordinate_parent *  x_vector_coordinate_parent) + (y_vector_coordinate_parent * y_vector_coordinate_parent))
-            print('the cell coord is: x')
-            print(cell.coords[0])
+        vector_a = x_vector_coordinate * x_vector_coordinate_parent
+        vector_b = y_vector_coordinate * y_vector_coordinate_parent
 
-            print('the cell coord is: y')
-            print(cell.coords[1])
+        sqrt_1 = sqrt((x_vector_coordinate * x_vector_coordinate) + (y_vector_coordinate * y_vector_coordinate))
+        sqrt_2 = sqrt( (x_vector_coordinate_parent *  x_vector_coordinate_parent) + (y_vector_coordinate_parent * y_vector_coordinate_parent))
+        print('the cell coord is: x')
+        print(cell.coords[0])
 
-            print('the parentparentcell coord is: x')
-            print(parentParentCell.coords[0])
-            print('the parentparentcell coord is: x')
-            print(parentParentCell.coords[1])
+        print('the cell coord is: y')
+        print(cell.coords[1])
 
-            print(sqrt_2)
-            print(sqrt_1)
+        print('the parentparentcell coord is: x')
+        print(parentParentCell.coords[0])
+        print('the parentparentcell coord is: x')
+        print(parentParentCell.coords[1])
 
-            self.angle_rad = acos(( vector_a + vector_b)  / (sqrt_1 * sqrt_2))
-            self.angle_deg = degrees(self.angle_rad)
+        print(sqrt_2)
+        print(sqrt_1)
 
-            return self.angle_deg
-        except type(parentParentCell) == None:
-            pass
+        self.angle_rad = acos(( vector_a + vector_b)  / (sqrt_1 * sqrt_2))
+        self.angle_deg = degrees(self.angle_rad)
+
+        return self.angle_deg
+
 
     # Compute the additive cost of performing a step from the parent to the
     # current cell. This calculation is carried out the same way no matter
@@ -248,10 +247,13 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         # it to the path. To work out the travel length along the
         # path, you'll also have to add self at self stage.
         while (cell is not None):
-                caca = cell.parent
+
                 print(type(cell))
                 print(type(caca))
                 path.waypoints.appendleft(cell)
+                caca = cell.parent
+                if (caca = None):
+                    break
                 path.travelCost = path.travelCost + self.computeLStageAdditiveCost(cell.parent, cell)
                 print 'hihi'
                 pathAngle += self.computeAngle(pathEndCell, cell, caca)
