@@ -255,7 +255,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
             if (cell.parent == None):
                 break
             path.travelCost = path.travelCost + self.computeLStageAdditiveCost(cell.parent, cell)
-            print(“la”)
+            print("la")
 
             pathAngle += self.computeAngle(pathEndCell, cell, cell.parent)
             print(“The
