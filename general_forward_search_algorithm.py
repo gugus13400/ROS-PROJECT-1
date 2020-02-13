@@ -60,6 +60,23 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
     def resolveDuplicate(self, nextCell, cell):
         raise NotImplementedError()
 
+    def computeAngle(self, cell, parentCell, parentParentCell):
+        x_vector_coordinate = cell.coords[0] - parentCell.coords[0]
+        y_vector_coordinate = cell.coords[1] - parentCell.coords[1]
+
+        x_vector_coordinate_parent = parentcell.coords[0] - parentParentCell.coords[0]
+        y_vector_coordinate_parent = parentcell.coords[1] - parentParentCellCell.coords[1]
+
+        vector_a = x_vector_coordinate * x_vector_coordinate_parent
+        vector_b = y_vector_coordinate * y_vector_coordinate_parent
+
+        sqrt_1 = sqrt((x_vector_coordinate * x_vector_coordinate) + (y_vector_coordinate * y_vector_coordinate))
+        sqrt_2 = sqrt( (x_vector_coordinate_parent *  x_vector_coordinate_parent) + (y_vector_coordinate_parent * y_vector_coordinate_parent))
+
+        self.angle = acos(( vector_a + vector_b)  / (sqrt_1 * sqrt_2))
+
+        return self.angle
+
     # Compute the additive cost of performing a step from the parent to the
     # current cell. This calculation is carried out the same way no matter
     # what heuristics, etc. are used. The cost computed here takes account
@@ -204,7 +221,10 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
 
         # Start at the goal and find the parent. Find the cost associated with the parent
         cell = pathEndCell.parent
+        parentParentCell = cell.parent
         path.travelCost = self.computeLStageAdditiveCost(pathEndCell.parent, pathEndCell)
+        pathAngle = self.computeAngle(pathEndCell, cell, parentParentCell)
+        print(pathAngle)
 
         # Iterate back through and extract each parent in turn and add
         # it to the path. To work out the travel length along the
@@ -212,6 +232,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         while (cell is not None):
             path.waypoints.appendleft(cell)
             path.travelCost = path.travelCost + self.computeLStageAdditiveCost(cell.parent, cell)
+            pathAngle += self.computeAngle()
             cell = cell.parent
 
         # Update the stats on the size of the path
