@@ -73,6 +73,9 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         sqrt_1 = sqrt((x_vector_coordinate * x_vector_coordinate) + (y_vector_coordinate * y_vector_coordinate))
         sqrt_2 = sqrt( (x_vector_coordinate_parent *  x_vector_coordinate_parent) + (y_vector_coordinate_parent * y_vector_coordinate_parent))
 
+        print(sqrt_2)
+        print(sqrt_1)
+
         self.angle_rad = acos(( vector_a + vector_b)  / (sqrt_1 * sqrt_2))
         self.angle_deg = degrees(self.angle_rad)
 
