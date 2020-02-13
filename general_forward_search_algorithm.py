@@ -226,6 +226,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         path.travelCost = self.computeLStageAdditiveCost(pathEndCell.parent, pathEndCell)
         pathAngle = self.computeAngle(pathEndCell, cell, parentParentCell)
         print(pathAngle)
+        print(cell.coords[0])
 
         # Iterate back through and extract each parent in turn and add
         # it to the path. To work out the travel length along the
