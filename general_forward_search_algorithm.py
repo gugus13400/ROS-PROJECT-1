@@ -142,7 +142,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
             # print'1'
             
             cell = self.popCellFromQueue()
-            print(cell)
+            # print(cell)
 
             # print '55'
             if (self.hasGoalBeenReached(cell) == True):
