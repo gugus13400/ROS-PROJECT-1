@@ -43,8 +43,8 @@ class DIJKSTRAPlanner(CellBasedForwardSearch):
             print(nextCell.pathCost)
             print 'cellpath cost + computeLadditive cost is '
             print(cell.pathCost + self.computeLStageAdditiveCost(nextCell, cell))
-            self.popCellFromQueue()
-            print'pop cell from queue is'
+            # self.popCellFromQueue()
+            # print'pop cell from queue is'
             print(self.popCellFromQueue())
             nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell)  # compute the distance between the current 'cell' and the 'nextcell'.
             nextCell.parent = cell
