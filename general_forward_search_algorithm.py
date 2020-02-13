@@ -61,33 +61,36 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         raise NotImplementedError()
 
     def computeAngle(self, pathEndCell, cell, parentParentCell):
-        x_vector_coordinate = pathEndCell.coords[0] - cell.coords[0]
-        y_vector_coordinate = pathEndCell.coords[1] - cell.coords[1]
+        try:
+            x_vector_coordinate = pathEndCell.coords[0] - cell.coords[0]
+            y_vector_coordinate = pathEndCell.coords[1] - cell.coords[1]
 
-        x_vector_coordinate_parent = cell.coords[0] - parentParentCell.coords[0]
-        y_vector_coordinate_parent = cell.coords[1] - parentParentCell.coords[1]
+            x_vector_coordinate_parent = cell.coords[0] - parentParentCell.coords[0]
+            y_vector_coordinate_parent = cell.coords[1] - parentParentCell.coords[1]
 
-        vector_a = x_vector_coordinate * x_vector_coordinate_parent
-        vector_b = y_vector_coordinate * y_vector_coordinate_parent
+            vector_a = x_vector_coordinate * x_vector_coordinate_parent
+            vector_b = y_vector_coordinate * y_vector_coordinate_parent
 
-        sqrt_1 = sqrt((x_vector_coordinate * x_vector_coordinate) + (y_vector_coordinate * y_vector_coordinate))
-        sqrt_2 = sqrt( (x_vector_coordinate_parent *  x_vector_coordinate_parent) + (y_vector_coordinate_parent * y_vector_coordinate_parent))
+            sqrt_1 = sqrt((x_vector_coordinate * x_vector_coordinate) + (y_vector_coordinate * y_vector_coordinate))
+            sqrt_2 = sqrt( (x_vector_coordinate_parent *  x_vector_coordinate_parent) + (y_vector_coordinate_parent * y_vector_coordinate_parent))
 
-        print(cell.coords[0])
-        print(cell.coords[1])
-        print(cell)
-        print(parentParentCell)
+            print(cell.coords[0])
+            print(cell.coords[1])
+            print(cell)
+            print(parentParentCell)
 
-        print(parentParentCell.coords[0])
-        print(parentParentCell.coords[1])
+            print(parentParentCell.coords[0])
+            print(parentParentCell.coords[1])
 
-        print(sqrt_2)
-        print(sqrt_1)
+            print(sqrt_2)
+            print(sqrt_1)
 
-        self.angle_rad = acos(( vector_a + vector_b)  / (sqrt_1 * sqrt_2))
-        self.angle_deg = degrees(self.angle_rad)
+            self.angle_rad = acos(( vector_a + vector_b)  / (sqrt_1 * sqrt_2))
+            self.angle_deg = degrees(self.angle_rad)
 
-        return self.angle_deg
+            return self.angle_deg
+        except:
+            pass
 
     # Compute the additive cost of performing a step from the parent to the
     # current cell. This calculation is carried out the same way no matter
