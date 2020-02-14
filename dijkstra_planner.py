@@ -49,7 +49,7 @@ class DIJKSTRAPlanner(CellBasedForwardSearch):
             # print(self.popCellFromQueue())
             nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell, cell)  #compute the distance between the current 'cell' and the 'nextcell'.
             # self.markCellAsVisitedAndRecordParent(nextCell, cell)
-            nextCell.parent = Cell
+            nextCell.parent = cell
             self.numberOfCellsVisited = self.numberOfCellsVisited + 1
 
             while (self.dijkstraQueue.empty() == False):
