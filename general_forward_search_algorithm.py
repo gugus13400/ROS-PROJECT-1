@@ -111,12 +111,12 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
     # set of coordinates. These are then converted into start and destination
     # cells in the search grid and the search algorithm is then run.
     def search(self, startCoords, goalCoords):
-        print 'poppopopopopopopopopopopopopopopo'
+
         # Make sure the queue is empty. We do this so that we can keep calling
         # the same method multiple times and have it work.
         while (self.isQueueEmpty() == False):
             self.popCellFromQueue()
-        print 'pipipipipip'
+
         # Create or update the search grid from the occupancy grid and seed
         # unvisited and occupied cells.
         if (self.searchGrid is None):
@@ -150,7 +150,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
 
         # Indicates if we reached the goal or not
         self.goalReached = False
-        # print ' la '
+
 
         # Iterate until we have run out of live cells to try or we reached the goal.
         # This is the main computational loop and is the implementation of
@@ -162,17 +162,17 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
             if rospy.is_shutdown():
                 return False
 
-            # print'1'
+
             
             cell = self.popCellFromQueue()
             # print(cell)
 
-            # print '55'
+
             if (self.hasGoalBeenReached(cell) == True):
                 self.goalReached = True
                 break
 
-            # print 'caca'
+
             cells = self.getNextSetOfCellsToBeVisited(cell)
             for nextCell in cells:
                 if (self.hasCellBeenVisitedAlready(nextCell) == False):
