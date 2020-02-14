@@ -60,6 +60,10 @@ class DIJKSTRAPlanner(CellBasedForwardSearch):
                 elif store[1].coords[0] == nextCell.coords[0] and store[1].coords[1] == nextCell.coords[1]:
                     self.temporaryQueue.put((nextCell.pathCost, nextCell))
 
+            while (self.temporaryQueue.empty() == False):
+                tempo = self.temporaryQueue.get()
+                self.dijkstraQueue.put(tempo)
+
             self.dijkstraQueue = self.temporaryQueue
 
             # print( ' The first element is ' + str(self.dijkstraQueue.get()))
