@@ -68,6 +68,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         x_vector_coordinate_parent = cell.coords[0] - parentParentCell.coords[0]
         y_vector_coordinate_parent = cell.coords[1] - parentParentCell.coords[1]
 
+        print('The parent cell coord in x is :' + pathEndCell.coords[0] + 'and in y is: ' + pathEndCell.coords[1] )
         vector_a = x_vector_coordinate * x_vector_coordinate_parent
         vector_b = y_vector_coordinate * y_vector_coordinate_parent
 
@@ -77,7 +78,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         self.angle_rad = acos(( vector_a + vector_b)  / (sqrt_1 * sqrt_2))
         self.angle_deg = degrees(self.angle_rad)
 
-        return self.angle_rad
+        return self.angle_deg
 
 
     # Compute the additive cost of performing a step from the parent to the
