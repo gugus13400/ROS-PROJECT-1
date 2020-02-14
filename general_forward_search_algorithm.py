@@ -69,7 +69,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         y_vector_coordinate_parent = cell.coords[1] - parentParentCell.coords[1]
 
         print('The Pathend cell coord in x is :' + str(pathEndCell.coords[0]) + 'and in y is: ' + str(pathEndCell.coords[1]) )
-        print('The cell coord in x is :' + str(Cell.coords[0]) + 'and in y is: ' + str(Cell.coords[1]))
+        print('The cell coord in x is :' + str(cell.coords[0]) + 'and in y is: ' + str(cell.coords[1]))
         print('The parent parent cell coord in x is :' + str(parentParentCell.coords[0]) + 'and in y is: ' + str(parentParentCell.coords[1]))
         vector_a = x_vector_coordinate * x_vector_coordinate_parent
         vector_b = y_vector_coordinate * y_vector_coordinate_parent
