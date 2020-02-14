@@ -62,7 +62,7 @@ class DIJKSTRAPlanner(CellBasedForwardSearch):
 
             while (self.temporaryQueue.empty() == False):
                 tempo = self.temporaryQueue.get()
-                self.dijkstraQueue.put(tempo)
+                self.dijkstraQueue.put((tempo[0], tempo[1])
 
             self.dijkstraQueue = self.temporaryQueue
 
