@@ -49,6 +49,19 @@ class DIJKSTRAPlanner(CellBasedForwardSearch):
             nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell)  # compute the distance between the current 'cell' and the 'nextcell'.
             nextCell.parent = cell
             self.numberOfCellsVisited = self.numberOfCellsVisited + 1
+
+            while (self.dijkstraQueue.empty() == False):
+                self.temporaryQueue =  PriorityQueue()
+                store = self.dijkstraQueue.get
+                if store[1] is not nextCell:
+                    self.temporaryQueue.put((store[0], store[1]))
+                elif store[1] == nextCell:
+                    self.temporaryQueue.put((nextCell.pathCost, nextCell))
+
+            self.dijkstraQueue = self.temporaryQueue
+
+            while (self.temporaryQueue.empty() == False):
+                self.temporaryQueue.get()
             # print(self.numberOfCellsVisited)
             # print ' push cell onto queue is :'
             # print(nextCell)
