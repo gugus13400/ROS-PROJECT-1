@@ -64,7 +64,6 @@ class DIJKSTRAPlanner(CellBasedForwardSearch):
                 tempo = self.temporaryQueue.get()
                 self.dijkstraQueue.put((tempo[0], tempo[1])
 
-            self.dijkstraQueue = self.temporaryQueue
 
             # print( ' The first element is ' + str(self.dijkstraQueue.get()))
 
