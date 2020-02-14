@@ -55,17 +55,17 @@ class DIJKSTRAPlanner(CellBasedForwardSearch):
                 store = self.dijkstraQueue.get()
                 print('The store [0] element is : ' + str(store[0]) + ' and the store[1] element is ' + str(store[1]) )
                 print('The nextCell pathcost element is : ' + str(nextCell.pathCost) + ' and the nextcell element is ' + str(nextCell))
-                if store[1] != nextCell:
-                    self.temporaryQueue.put((store[0], store[1]))
-                elif store[1] == nextCell:
+                if store[1].coords[0] != nextCell.coords[0]:
+                   self.temporaryQueue.put((store[0], store[1]))
+                elif store[1].coords[0] == nextCell.coords[0] and store[1].coords[1] == nextCell.coords[1]:
                     self.temporaryQueue.put((nextCell.pathCost, nextCell))
 
-            self.dijkstraQueue = self.temporaryQueue
+            self.dijkstraQueue = temporary_Queue
 
             # print( ' The first element is ' + str(self.dijkstraQueue.get()))
 
-            while (self.temporaryQueue.empty() == False):
-                self.temporaryQueue.get()
+            # while (self.temporaryQueue.empty() == False):
+            #     self.temporaryQueue.get()
             # print(self.numberOfCellsVisited)
             # print ' push cell onto queue is :'
             # print(nextCell)
