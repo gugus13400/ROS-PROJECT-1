@@ -59,10 +59,6 @@ class DIJKSTRAPlanner(CellBasedForwardSearch):
                    self.temporaryQueue.put((store[0], store[1]))
                 elif store[1].coords[0] == nextCell.coords[0] and store[1].coords[1] == nextCell.coords[1]:
                     self.temporaryQueue.put((nextCell.pathCost, nextCell))
-                    print(str(store[1].coords[0]))
-                    print(str(store[1].coords[1]))
-                    print(str(nextCell.coords[0]))
-                    print(str(nextCell.coords[1]))
 
             while (self.temporaryQueue.empty() == False):
                 tempo = self.temporaryQueue.get()
