@@ -48,7 +48,7 @@ class DIJKSTRAPlanner(CellBasedForwardSearch):
             # print'pop cell from queue is'
             # print(self.popCellFromQueue())
             nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell)  #compute the distance between the current 'cell' and the 'nextcell'.
-            nextCell.parent = cell
+            self.markCellAsVisitedAndRecordParent(nextCell, cell)
             self.numberOfCellsVisited = self.numberOfCellsVisited + 1
 
             while (self.dijkstraQueue.empty() == False):
@@ -64,8 +64,8 @@ class DIJKSTRAPlanner(CellBasedForwardSearch):
 
             # print( ' The first element is ' + str(self.dijkstraQueue.get()))
 
-            while (self.temporaryQueue.empty() == False):
-                self.temporaryQueue.get()
+            # while (self.temporaryQueue.empty() == False):
+            #     self.temporaryQueue.get()
             # print(self.numberOfCellsVisited)
             # print ' push cell onto queue is :'
             # print(nextCell)
