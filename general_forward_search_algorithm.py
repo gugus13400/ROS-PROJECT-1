@@ -77,7 +77,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         self.angle_rad = acos(( vector_a + vector_b)  / (sqrt_1 * sqrt_2))
         self.angle_deg = degrees(self.angle_rad)
 
-        return self.angle_deg
+        return self.angle_rad
 
 
     # Compute the additive cost of performing a step from the parent to the
