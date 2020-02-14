@@ -64,13 +64,7 @@ class DIJKSTRAPlanner(CellBasedForwardSearch):
                 tempo = self.temporaryQueue.get()
                 self.dijkstraQueue.put((tempo[0], tempo[1])
 
-
-            # print( ' The first element is ' + str(self.dijkstraQueue.get()))
-
-            # while (self.temporaryQueue.empty() == False):
-            #     self.temporaryQueue.get()
-            # print(self.numberOfCellsVisited)
-            # print ' push cell onto queue is :'
-            # print(nextCell)
-            # print(self.pushCellOntoQueue(nextCell))
+            print ' push cell onto queue is :'
+            print(nextCell)
+            print(self.pushCellOntoQueue(nextCell))
             self.pushCellOntoQueue(nextCell)
