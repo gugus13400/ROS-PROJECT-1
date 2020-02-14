@@ -51,8 +51,8 @@ class DIJKSTRAPlanner(CellBasedForwardSearch):
             self.numberOfCellsVisited = self.numberOfCellsVisited + 1
 
             while (self.dijkstraQueue.empty() == False):
-                self.temporaryQueue =  PriorityQueue()
-                store = self.dijkstraQueue.get
+                self.temporaryQueue = PriorityQueue()
+                store = self.dijkstraQueue.get()
                 if store[1] != nextCell:
                     self.temporaryQueue.put((store[0], store[1]))
                 elif store[1] == nextCell:
