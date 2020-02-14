@@ -17,6 +17,7 @@ class GREEDYPlanner(CellBasedForwardSearch):
     def __init__(self, title, occupancyGrid):
         CellBasedForwardSearch.__init__(self, title, occupancyGrid)
         self.greedyQueue = PriorityQueue()
+        self.temporaryQueue = PriorityQueue()
         # CellBasedForwardSearch.__init__(self, title, occupancyGrid)
         # self.fifoQueue = deque()
 
