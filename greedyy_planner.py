@@ -59,10 +59,11 @@ class GREEDYPlanner(CellBasedForwardSearch):
             #        self.temporaryQueue.put((store[0], store[1]))
             #     elif store[1].coords[0] == nextCell.coords[0] and store[1].coords[1] == nextCell.coords[1]:
             #         self.temporaryQueue.put((nextCell.pathCost, nextCell))
-            #
+
             # while (self.temporaryQueue.empty() == False):
             #     tempo = self.temporaryQueue.get()
             #     self.greedyQueue.put((tempo[0], tempo[1]))
+
             # print(self.numberOfCellsVisited)
             # print ' push cell onto queue is :'
             # print(nextCell)
