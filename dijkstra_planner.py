@@ -53,6 +53,7 @@ class DIJKSTRAPlanner(CellBasedForwardSearch):
             while (self.dijkstraQueue.empty() == False):
                 self.temporaryQueue = PriorityQueue()
                 store = self.dijkstraQueue.get()
+                print('The store [1] element is : ' + str(store[0]) + ' and the store[1] element is ' + str(store[1]) )
                 if store[1] != nextCell:
                     self.temporaryQueue.put((store[0], store[1]))
                 elif store[1] == nextCell:
