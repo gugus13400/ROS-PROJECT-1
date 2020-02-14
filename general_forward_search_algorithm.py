@@ -225,6 +225,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         path.waypoints.append(pathEndCell)
 
         # Start at the goal and find the parent. Find the cost associated with the parent
+        caca = pathEndCell
         cell = pathEndCell.parent
         parentParentCell = cell.parent
         path.travelCost = self.computeLStageAdditiveCost(pathEndCell.parent, pathEndCell)
@@ -238,12 +239,14 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         while (cell is not None):
             if (cell.parent == None):
                 break
+
             path.waypoints.appendleft(cell)
             path.travelCost = path.travelCost + self.computeLStageAdditiveCost(cell.parent, cell)
 
-            pathAngle += self.computeAngle(pathEndCell, cell, cell.parent)
+            pathAngle += self.computeAngle(caca, cell, cell.parent)
 
             cell = cell.parent
+            caca = caca.parent
 
         # Update the stats on the size of the path
         path.numberOfWaypoints = len(path.waypoints)
