@@ -17,6 +17,7 @@ class DIJKSTRAPlanner(CellBasedForwardSearch):
     def __init__(self, title, occupancyGrid):
         CellBasedForwardSearch.__init__(self, title, occupancyGrid)
         self.dijkstraQueue = PriorityQueue()
+        self.temporaryQueue = PriorityQueue()
         # CellBasedForwardSearch.__init__(self, title, occupancyGrid)
         # self.fifoQueue = deque()
 
@@ -51,7 +52,6 @@ class DIJKSTRAPlanner(CellBasedForwardSearch):
             self.numberOfCellsVisited = self.numberOfCellsVisited + 1
 
             while (self.dijkstraQueue.empty() == False):
-                self.temporaryQueue = PriorityQueue()
                 store = self.dijkstraQueue.get()
                 print('The store [0] element is : ' + str(store[0]) + ' and the store[1] element is ' + str(store[1]) )
                 print('The nextCell pathcost element is : ' + str(nextCell.pathCost) + ' and the nextcell element is ' + str(nextCell))
