@@ -60,9 +60,9 @@ class DIJKSTRAPlanner(CellBasedForwardSearch):
                 elif store[1].coords[0] == nextCell.coords[0] and store[1].coords[1] == nextCell.coords[1]:
                     self.temporaryQueue.put((nextCell.pathCost, nextCell))
             print(self.dijkstraQueue)
-            while (self.temporaryQueue.empty() == False):
-                tempo = self.temporaryQueue.get()
-                self.dijkstraQueue.put((tempo[0], tempo[1])
+            # while (self.temporaryQueue.empty() == False):
+            #     tempo = self.temporaryQueue.get()
+            #     self.dijkstraQueue.put((tempo[0], tempo[1])
 
             # print(' push cell onto queue is :')
             # print(nextCell)
