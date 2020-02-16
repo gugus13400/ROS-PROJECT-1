@@ -82,6 +82,18 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
 
         return self.angle_deg
 
+    def computeHeuristicManhattan(self, nextCell):
+        dx = abs(self.goal.coords[0] - nextCell.coords[0])
+        dy = abs(self.goal.coords[1] - nextCell.coords[1])
+        cost=min(1+(0.2/((1.75-cell.terrainCost)**2))**2, 1000)*
+        #need to find each cell in the path and find the cost of moving from one cell to the other.
+        return cost * (dx + dy)
+
+    def computeHeuristicEuclidian(self, nextCell):
+        dx = abs(self.goal.coords[0] - nextCell.coords[0])
+        dy = abs(self.goal.coords[1] - nextCell.coords[1])
+        cost=min(1+(0.2/((1.75-cell.terrainCost)**2))**2, 1000)
+        return cost * sqrt(dx * dx + dy * dy)
 
     # Compute the additive cost of performing a step from the parent to the
     # current cell. This calculation is carried out the same way no matter
@@ -92,7 +104,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         # If the parent is empty, this is the start of the path and the
         # cost is 0.
         if (parentCell is None):
-            return 0
+            return
 
         # Travel cost is Cartesian distance
         dX = cell.coords[0] - parentCell.coords[0]
@@ -178,12 +190,15 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
                 if (self.hasCellBeenVisitedAlready(nextCell) == False):
                     self.markCellAsVisitedAndRecordParent(nextCell, cell)
 
-                    nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell)  ###### DIJKSTRA ###### compute the distance between the current 'cell' and the 'nextcell'.
+                    #DIJKSTRA# nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell)  ###### DIJKSTRA ###### compute the distance between the current 'cell' and the 'nextcell'.
 
-                    #nextCell.pathCost = self.computeLStageAdditiveCost(nextCell, self.goal)#########GREEEEEEEEEEEEEEEEEEEEEEDY########
+                    #GREEDY# nextCell.pathCost = self.computeLStageAdditiveCost(nextCell, self.goal)#########GREEEEEEEEEEEEEEEEEEEEEEDY########
+
+                    nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell, cell) + self.computeHeuristicManhattan(nextCell)
 
                     self.pushCellOntoQueue(nextCell) #push the cell information ( cell name + distance to goal in the priority queue)
                     self.numberOfCellsVisited = self.numberOfCellsVisited + 1
+
                 elif (nextCell.label == CellLabel.ALIVE):
                     self.resolveDuplicate(nextCell, cell)
 

@@ -48,8 +48,6 @@ class DIJKSTRAPlanner(CellBasedForwardSearch):
 
             while (self.dijkstraQueue.empty() == False):
                 store = self.dijkstraQueue.get()
-                # print('The store [0] element is : ' + str(store[0]) + ' and the store[1] element is ' + str(store[1]) )
-                # print('The nextCell pathcost element is : ' + str(nextCell.pathCost) + ' and the nextcell element is ' + str(nextCell))
                 if store[1].coords[0] == nextCell.coords[0] and store[1].coords[1] == nextCell.coords[1]:
                     self.temporaryQueue.put((nextCell.pathCost, nextCell))
                 else:
