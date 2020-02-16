@@ -87,7 +87,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         dy = abs(self.goal.coords[1] - nextCell.coords[1])
         #cost=min(1+(0.2/((1.75-cell.terrainCost)**2))**2, 1000)
         #need to find each cell in the path and find the cost of moving from one cell to the other.
-        return (dx + dy)
+        return (dx * dx  + dy * dy)
 
     def computeHeuristicEuclidian(self, nextCell):
         dx = abs(self.goal.coords[0] - nextCell.coords[0])
