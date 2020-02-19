@@ -123,6 +123,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
             L_total += cost * sqrt(dx * dx + dy * dy)
             print(L_total)
             previous_cell = theCellIs
+        print(L_total)
         return L_total
 
     def computeHeuristicOctile(self, nextCell):
