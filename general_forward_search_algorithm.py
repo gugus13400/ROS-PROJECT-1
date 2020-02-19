@@ -7,6 +7,7 @@ from collections import deque
 from cell import *
 from planned_path import PlannedPath
 from math import *
+from bresenham import bresenham
 import rospy
 
 class GeneralForwardSearchAlgorithm(PlannerBase):
@@ -194,7 +195,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
 
                     #nextCell.pathCost = self.computeLStageAdditiveCost(nextCell, self.goal)#########GREEEEEEEEEEEEEEEEEEEEEEDY########
 
-                    nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell, cell) + 0.8 #self.computeHeuristicManhattan(nextCell)
+                    nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell, cell) + self.computeHeuristicManhattan(nextCell)
 
                     self.pushCellOntoQueue(nextCell) #push the cell information ( cell name + distance to goal in the priority queue)
                     self.numberOfCellsVisited = self.numberOfCellsVisited + 1
@@ -298,3 +299,4 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
 
         return path
 
+print(list(bresenham(-1, -4, 3, 2)))
