@@ -83,7 +83,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         return self.angle_deg
 
     def computeHeuristicConstant(self):
-        constant = 0.5
+        constant = 100
         return constant
 
     def computeHeuristicManhattan(self, nextCell):
