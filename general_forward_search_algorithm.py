@@ -115,7 +115,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         dy2 = self.start.coords[1] - self.goal.coords[1]
         cross = abs(dx1 * dy2 - dx2 * dy1)
 
-        return (L_1 + L_2) * cross
+        return L_1 + L_2 #) * cross
 
     def computeHeuristicEuclidian(self, nextCell):
         bressenham = list(bresenham(nextCell.coords[0], nextCell.coords[1], self.goal.coords[0], self.goal.coords[1]))
@@ -152,13 +152,6 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         cross = abs(dx1 * dy2 - dx2 * dy1)
         return ((dx + dy) + (sqrt(2) - 2) * min(dx, dy) ) * cross
 
-    def computeHeuristicTieBreaking(self, nextCell):
-        dx1 = nextCell.coords[0] - self.goal.coords[0]
-        dy1 = nextCell.coords[1] - self.goal.coords[1]
-        dx2 = self.start.coords[0] - self.goal.coords[0]
-        dy2 = self.start.coords[1] - self.goal.coords[1]
-        cross = abs(dx1 * dy2 - dx2 * dy1)
-        heuristic += cross * 0.001
     # Compute the additive cost of performing a step from the parent to the
     # current cell. This calculation is carried out the same way no matter
     # what heuristics, etc. are used. The cost computed here takes account
