@@ -123,12 +123,17 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
             L_total += cost * sqrt(dx * dx + dy * dy)
             previous_cell = theCellIs
 
-        # dx1 = nextCell.coords[0] - self.goal.coords[0]
-        # dy1 = nextCell.coords[1] - self.goal.coords[1]
-        # dx2 = self.start.coords[0] - self.goal.coords[0]
-        # dy2 = self.start.coords[1] - self.goal.coords[1]
-        # cross = abs(dx1 * dy2 - dx2 * dy1)
-        return L_total # * cross
+        # dx = abs(nextCell.coords[0] - self.goal.coords[0])
+        # dy = abs(nextCell.coords[1] - self.goal.coords[1])
+        # L = sqrt(dx *dx + dy * dy)
+        #
+        # return L
+        dx1 = nextCell.coords[0] - self.goal.coords[0]
+        dy1 = nextCell.coords[1] - self.goal.coords[1]
+        dx2 = self.start.coords[0] - self.goal.coords[0]
+        dy2 = self.start.coords[1] - self.goal.coords[1]
+        cross = abs(dx1 * dy2 - dx2 * dy1)
+        return L_total * cross
 
     def computeHeuristicOctile(self, nextCell):
         dx = abs(nextCell.coords[0] - self.goal.coords[0])
