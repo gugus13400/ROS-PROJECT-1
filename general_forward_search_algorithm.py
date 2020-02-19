@@ -113,7 +113,6 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
 
     def computeHeuristicEuclidian(self, nextCell):
         bressenham = list(bresenham(nextCell.coords[0], nextCell.coords[1], self.goal.coords[0], self.goal.coords[1]))
-        print(bressenham)
         L_total = 0
         previous_cell = nextCell
         for cells in bressenham:
@@ -122,7 +121,11 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
             dy = abs(theCellIs.coords[1] - previous_cell.coords[1])
             cost = min(1+(0.2/((1.75-theCellIs.terrainCost)**2))**2, 1000)
             L_total += cost * sqrt(dx * dx + dy * dy)
+            print('previous is ')
+            print(previous_cell)
             previous_cell = theCellIs
+            print'the new previous is '
+            print(previous_cell)
         return L_total
 
     def computeHeuristicOctile(self, nextCell):
