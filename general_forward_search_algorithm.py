@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import self as self
 
 from occupancy_grid import OccupancyGrid
 from search_grid import SearchGrid
@@ -9,7 +10,7 @@ from planned_path import PlannedPath
 from math import *
 from bresenham import bresenham
 import rospy
-
+from search_grid import *
 class GeneralForwardSearchAlgorithm(PlannerBase):
 
     # This class implements the basic framework for LaValle's general
@@ -215,6 +216,10 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         self.drawCurrentState()
         
         print "numberOfCellsVisited = " + str(self.numberOfCellsVisited)
+
+        print(list(bresenham(-1, -4, 3, 2)))
+        print(' the cell with coord 52 , 16 is :')
+        print(self.searchGrid.getCellFromCoords((52, 16)))
         
         if self.goalReached:
             print "Goal reached"
@@ -299,4 +304,4 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
 
         return path
 
-print(list(bresenham(-1, -4, 3, 2)))
+
