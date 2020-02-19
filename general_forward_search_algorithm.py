@@ -121,11 +121,8 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
             dy = abs(theCellIs.coords[1] - previous_cell.coords[1])
             cost = min(1+(0.2/((1.75-theCellIs.terrainCost)**2))**2, 1000)
             L_total += cost * sqrt(dx * dx + dy * dy)
-            print('previous is ')
-            print(previous_cell)
+            print(L_total)
             previous_cell = theCellIs
-            print'the new previous is '
-            print(previous_cell)
         return L_total
 
     def computeHeuristicOctile(self, nextCell):
