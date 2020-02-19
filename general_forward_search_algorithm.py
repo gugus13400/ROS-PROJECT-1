@@ -82,6 +82,10 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
 
         return self.angle_deg
 
+    def computeHeuristicConstant(self):
+        constant = 4
+        return constant
+
     def computeHeuristicManhattan(self, nextCell):
         bressenham_1 = list(bresenham(nextCell.coords[0], nextCell.coords[1], nextCell.coords[0], self.goal.coords[1]))
         L_1 = 0
@@ -225,9 +229,12 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
 
                     #nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell) + self.computeHeuristicManhattan(nextCell) # Manhattan #
 
-                    nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell, cell) + self.computeHeuristicManhattan(nextCell) # Euclidian #
+                    #nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell, cell) + self.computeHeuristicManhattan(nextCell) # Euclidian #
 
                     #nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell) + self.computeHeuristicOctile(nextCell) # Octile #
+
+                    nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell, cell) + self.computeHeuristicConstant(nextCell) # Constant #
+
 
                     self.pushCellOntoQueue(nextCell) #push the cell information ( cell name + distance to goal in the priority queue)
                     self.numberOfCellsVisited = self.numberOfCellsVisited + 1
