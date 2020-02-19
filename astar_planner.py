@@ -43,7 +43,7 @@ class ASTARPlanner(CellBasedForwardSearch):
 
             #nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell, cell) + self.computeHeuristicManhattan(nextCell)  #compute the distance between the current 'cell' and the 'nextcell'.
 
-            nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell, cell) + self.computeHeuristicConstant(nextCell)
+            nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell, cell) + self.computeHeuristicConstant()
 
             self.markCellAsVisitedAndRecordParent(nextCell, cell)
             self.numberOfCellsVisited = self.numberOfCellsVisited + 1
