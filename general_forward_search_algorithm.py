@@ -120,6 +120,11 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
             previous_cell = theCellIs
         return L_total
 
+    def computeHeuristicOctile(self, nextCell):
+        dx = abs(nextCell.coords[0] - self.goal.coords[0])
+        dy = abs(nextCell.coords[1] - self.goal.coords[1])
+        return (dx + dy) + (sqrt(2) - 2) * min(dx, dy)
+
     # Compute the additive cost of performing a step from the parent to the
     # current cell. This calculation is carried out the same way no matter
     # what heuristics, etc. are used. The cost computed here takes account
@@ -214,11 +219,15 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
                 if (self.hasCellBeenVisitedAlready(nextCell) == False):
                     self.markCellAsVisitedAndRecordParent(nextCell, cell)
 
-                    #DIJKSTRA# nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell)  ###### DIJKSTRA ###### compute the distance between the current 'cell' and the 'nextcell'.
+                    #nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell) # DIJKSTRA #
 
-                    #nextCell.pathCost = self.computeLStageAdditiveCost(nextCell, self.goal)#########GREEEEEEEEEEEEEEEEEEEEEEDY########
+                    #nextCell.pathCost = self.computeLStageAdditiveCost(nextCell, self.goal) # GREEDY #
 
-                    nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell, cell) + self.computeHeuristicEuclidian(nextCell)
+                    #nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell) + self.computeHeuristicManhattan(nextCell) # Manhattan #
+
+                    #nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell, cell) + self.computeHeuristicEuclidian(nextCell) # Euclidian #
+
+                    nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell) + self.computeHeuristicOctile(nextCell) # Octile #
 
                     self.pushCellOntoQueue(nextCell) #push the cell information ( cell name + distance to goal in the priority queue)
                     self.numberOfCellsVisited = self.numberOfCellsVisited + 1
