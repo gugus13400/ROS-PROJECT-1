@@ -109,7 +109,13 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
             L_2 += cost * (dx + dy)
             previous_cell = theCellIs
 
-        return L_1 + L_2
+        dx1 = nextCell.coords[0] - self.goal.coords[0]
+        dy1 = nextCell.coords[1] - self.goal.coords[1]
+        dx2 = self.start.coords[0] - self.goal.coords[0]
+        dy2 = self.start.coords[1] - self.goal.coords[1]
+        cross = abs(dx1 * dy2 - dx2 * dy1)
+
+        return (L_1 + L_2) * cross
 
     def computeHeuristicEuclidian(self, nextCell):
         bressenham = list(bresenham(nextCell.coords[0], nextCell.coords[1], self.goal.coords[0], self.goal.coords[1]))
@@ -251,11 +257,11 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
 
                     #nextCell.pathCost = self.computeLStageAdditiveCost(nextCell, self.goal) # GREEDY #
 
-                    #nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell) + self.computeHeuristicManhattan(nextCell) # Manhattan #
+                    nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell) + self.computeHeuristicManhattan(nextCell) # Manhattan #
 
                     #nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell, cell) + self.computeHeuristicEuclidian(nextCell)  # Euclidian #
 
-                    nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell) + self.computeHeuristicOctile(nextCell) # Octile #
+                    #nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell) + self.computeHeuristicOctile(nextCell) # Octile #
 
                     #nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell, cell) + self.computeHeuristicConstant() # Constant #
 
