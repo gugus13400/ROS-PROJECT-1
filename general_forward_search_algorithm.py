@@ -117,6 +117,8 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
             dy = abs(theCellIs.coords[1] - previous_cell.coords[1])
             cost = min(1+(0.2/((1.75-theCellIs.terrainCost)**2))**2, 1000)
             L_total += cost * sqrt(dx * dx + dy * dy)
+            print('the ltotal is :')
+            print(L_total)
             previous_cell = theCellIs
         return L_total
 
