@@ -83,17 +83,42 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         return self.angle_deg
 
     def computeHeuristicManhattan(self, nextCell):
-        dx = abs(self.goal.coords[0] - nextCell.coords[0])
-        dy = abs(self.goal.coords[1] - nextCell.coords[1])
-        #cost=min(1+(0.2/((1.75-cell.terrainCost)**2))**2, 1000)
-        #need to find each cell in the path and find the cost of moving from one cell to the other.
-        return (dx * dx  + dy * dy)
+        bressenham_1 = list(bresenham(nextCell.coords[0], nextCell.coords[1], nextCell.coords[0], self.goal.coords[1]))
+        L_1 = 0
+        previous_cell = nextCell
+        for cells in bressenham_1:
+            theCellIs = self.searchGrid.getCellFromCoords(cells)
+            dx = abs(theCellIs.coords[0] - previous_cell.coords[0])
+            dy = abs(theCellIs.coords[1] - previous_cell.coords[1])
+            cost = min(1 + (0.2 / ((1.75 - theCellIs.terrainCost) ** 2)) ** 2, 1000)
+            L_1 += cost * (dx  + dy)
+            previous_cell = theCellIs
+
+        bressenham_2 = list(bresenham(nextCell.coords[0], self.goal.coords[1], self.goal.coords[0], self.goal.coords[1]))
+        L_2 = 0
+        previous_cell = nextCell
+        for cells in bressenham_2:
+            theCellIs = self.searchGrid.getCellFromCoords(cells)
+            dx = abs(theCellIs.coords[0] - previous_cell.coords[0])
+            dy = abs(theCellIs.coords[1] - previous_cell.coords[1])
+            cost = min(1 + (0.2 / ((1.75 - theCellIs.terrainCost) ** 2)) ** 2, 1000)
+            L_2 += cost * (dx + dy)
+            previous_cell = theCellIs
+
+        return L_1 + L_2
 
     def computeHeuristicEuclidian(self, nextCell):
-        dx = abs(self.goal.coords[0] - nextCell.coords[0])
-        dy = abs(self.goal.coords[1] - nextCell.coords[1])
-        cost=min(1+(0.2/((1.75-cell.terrainCost)**2))**2, 1000)
-        return cost * sqrt(dx * dx + dy * dy)
+        bressenham = list(bresenham(nextCell.coords[0], nextCell.coords[1], self.goal.coords[0], self.goal.coords[1]))
+        L_total = 0
+        previous_cell = nextCell
+        for cells in bressenham:
+            theCellIs = self.searchGrid.getCellFromCoords(cells)
+            dx = abs(theCellIs.coords[0] - previous_cell.coords[0])
+            dy = abs(theCellIs.coords[1] - previous_cell.coords[1])
+            cost = min(1+(0.2/((1.75-theCellIs.terrainCost)**2))**2, 1000)
+            L_total += cost * sqrt(dx * dx + dy * dy)
+            previous_cell = theCellIs
+        return L_total
 
     # Compute the additive cost of performing a step from the parent to the
     # current cell. This calculation is carried out the same way no matter
@@ -215,9 +240,6 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         
         print "numberOfCellsVisited = " + str(self.numberOfCellsVisited)
 
-        print(list(bresenham(-1, -4, 3, 2)))
-        print(' the cell with coord 52 , 16 is :')
-        print(self.searchGrid.getCellFromCoords((52, 16)))
         
         if self.goalReached:
             print "Goal reached"
