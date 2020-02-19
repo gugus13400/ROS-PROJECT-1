@@ -112,23 +112,23 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         return L_1 + L_2
 
     def computeHeuristicEuclidian(self, nextCell):
-        # bressenham = list(bresenham(nextCell.coords[0], nextCell.coords[1], self.goal.coords[0], self.goal.coords[1]))
-        # L_total = 0
-        # previous_cell = nextCell
-        # for cells in bressenham:
-        #     theCellIs = self.searchGrid.getCellFromCoords(cells)
-        #     dx = abs(theCellIs.coords[0] - previous_cell.coords[0])
-        #     dy = abs(theCellIs.coords[1] - previous_cell.coords[1])
-        #     cost = min(1+(0.2/((1.75-theCellIs.terrainCost)**2))**2, 1000)
-        #     L_total += cost * sqrt(dx * dx + dy * dy)
-        #     previous_cell = theCellIs
+        bressenham = list(bresenham(nextCell.coords[0], nextCell.coords[1], self.goal.coords[0], self.goal.coords[1]))
+        L_total = 0
+        previous_cell = nextCell
+        for cells in bressenham:
+            theCellIs = self.searchGrid.getCellFromCoords(cells)
+            dx = abs(theCellIs.coords[0] - previous_cell.coords[0])
+            dy = abs(theCellIs.coords[1] - previous_cell.coords[1])
+            cost = min(1+(0.2/((1.75-theCellIs.terrainCost)**2))**2, 1000)
+            L_total += cost * sqrt(dx * dx + dy * dy)
+            previous_cell = theCellIs
 
-        dx = abs(nextCell.coords[0] - self.goal.coords[0])
-        dy = abs(nextCell.coords[1] - self.goal.coords[1])
-        L = sqrt(dx *dx + dy * dy)
-
-        return L
-        # return L_total
+        # dx = abs(nextCell.coords[0] - self.goal.coords[0])
+        # dy = abs(nextCell.coords[1] - self.goal.coords[1])
+        # L = sqrt(dx *dx + dy * dy)
+        #
+        # return L
+        return L_total
 
     def computeHeuristicOctile(self, nextCell):
         dx = abs(nextCell.coords[0] - self.goal.coords[0])
@@ -233,11 +233,11 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
 
                     #nextCell.pathCost = self.computeLStageAdditiveCost(nextCell, self.goal) # GREEDY #
 
-                    #nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell) + self.computeHeuristicManhattan(nextCell) # Manhattan #
+                    nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell) + self.computeHeuristicManhattan(nextCell) # Manhattan #
 
                     #nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell, cell) + self.computeHeuristicEuclidian(nextCell)  # Euclidian #
 
-                    nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell) + self.computeHeuristicOctile(nextCell) # Octile #
+                    #nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell) + self.computeHeuristicOctile(nextCell) # Octile #
 
                     #nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell, cell) + self.computeHeuristicConstant() # Constant #
 
