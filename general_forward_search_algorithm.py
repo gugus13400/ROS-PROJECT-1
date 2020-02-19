@@ -150,7 +150,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         # dx2 = self.start.coords[0] - self.goal.coords[0]
         # dy2 = self.start.coords[1] - self.goal.coords[1]
         # cross = abs(dx1 * dy2 - dx2 * dy1)
-        return ((max(dx, dy) + (sqrt(2) - 1) * min(dx, dy) )
+        return ((max(dx, dy) + (sqrt(2) - 1) * min(dx, dy))
 
     # Compute the additive cost of performing a step from the parent to the
     # current cell. This calculation is carried out the same way no matter
@@ -252,9 +252,9 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
 
                     #nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell) + self.computeHeuristicManhattan(nextCell) # Manhattan #
 
-                    #nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell, cell) + self.computeHeuristicEuclidian(nextCell)  # Euclidian #
+                    nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell, cell) + self.computeHeuristicEuclidian(nextCell)  # Euclidian #
 
-                    nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell) + self.computeHeuristicOctile(nextCell) # Octile #
+                    #nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell) + self.computeHeuristicOctile(nextCell) # Octile #
 
                     #nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell, cell) + self.computeHeuristicConstant() # Constant #
 
