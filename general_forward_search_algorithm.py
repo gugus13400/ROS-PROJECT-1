@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import self as self
 
 from occupancy_grid import OccupancyGrid
 from search_grid import SearchGrid
@@ -10,7 +9,6 @@ from planned_path import PlannedPath
 from math import *
 from bresenham import bresenham
 import rospy
-from search_grid import *
 class GeneralForwardSearchAlgorithm(PlannerBase):
 
     # This class implements the basic framework for LaValle's general
