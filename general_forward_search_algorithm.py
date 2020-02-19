@@ -117,6 +117,10 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         previous_cell = nextCell
         for cells in bressenham:
             theCellIs = self.searchGrid.getCellFromCoords(cells)
+            print('thecellis')
+            print(theCellIs)
+            print('previous cell')
+            print(previous_cell)
             dx = abs(theCellIs.coords[0] - previous_cell.coords[0])
             dy = abs(theCellIs.coords[1] - previous_cell.coords[1])
             cost = min(1+(0.2/((1.75-theCellIs.terrainCost)**2))**2, 1000)
@@ -148,7 +152,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         # However, basically it builds up extremely quickly
         # x=[1:0.01:2];
         # c=min(1+(.2./((1.7-x).^2)).^2,1000);
-        cost=min(1+(0.2/((1.75-cell.terrainCost)**2))**2, 1000)
+        cost = min(1+(0.2/((1.75-cell.terrainCost)**2))**2, 1000)
         L = sqrt(dX * dX + dY * dY)*cost# Multiplied by the terrain cost of the cell
 
         return L
