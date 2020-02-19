@@ -155,7 +155,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
     # Compute the additive cost of performing a step from the parent to the
     # current cell. This calculation is carried out the same way no matter
     # what heuristics, etc. are used. The cost computed here takes account
-    # of the terrain traversability cost using an equation a bit like that
+    # of the terrain traversability cost using an equation a bit like thaet
     # presented in the lectures.
     def computeLStageAdditiveCost(self, parentCell, cell):
         # If the parent is empty, this is the start of the path and the
