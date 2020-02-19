@@ -211,7 +211,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
                 self.goalReached = True
                 break
 
-
+            print'caca'
             cells = self.getNextSetOfCellsToBeVisited(cell)
             for nextCell in cells:
                 if (self.hasCellBeenVisitedAlready(nextCell) == False):
