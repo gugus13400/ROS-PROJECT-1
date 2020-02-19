@@ -145,14 +145,14 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         dx = abs(nextCell.coords[0] - self.goal.coords[0])
         dy = abs(nextCell.coords[1] - self.goal.coords[1])
 
-        # dx1 = nextCell.coords[0] - self.goal.coords[0]
-        # dy1 = nextCell.coords[1] - self.goal.coords[1]
-        # dx2 = self.start.coords[0] - self.goal.coords[0]
-        # dy2 = self.start.coords[1] - self.goal.coords[1]
-        # cross = abs(dx1 * dy2 - dx2 * dy1)
-        return ((dx + dy) + (sqrt(2) - 2) * min(dx, dy) )
+        dx1 = nextCell.coords[0] - self.goal.coords[0]
+        dy1 = nextCell.coords[1] - self.goal.coords[1]
+        dx2 = self.start.coords[0] - self.goal.coords[0]
+        dy2 = self.start.coords[1] - self.goal.coords[1]
+        cross = abs(dx1 * dy2 - dx2 * dy1)
+        return ((max(dx, dy)) + (sqrt(2) - 1) * min(dx, dy)) * cross
 
-    def computeHeuristicTieBreaking(self, nextCell):
+def computeHeuristicTieBreaking(self, nextCell):
         dx1 = nextCell.coords[0] - self.goal.coords[0]
         dy1 = nextCell.coords[1] - self.goal.coords[1]
         dx2 = self.start.coords[0] - self.goal.coords[0]
