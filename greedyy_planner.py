@@ -39,7 +39,7 @@ class GREEDYPlanner(CellBasedForwardSearch):
         # return cell
 
     def resolveDuplicate(self, nextCell, cell):
-        if nextCell.pathCost > cell.pathCost + self.computeLStageAdditiveCost(nextCell, cell):
+        if nextCell.pathCost > cell.pathCost + self.computeLStageAdditiveCost(nextCell, self.goal):
             # print 'NextCell path cost is '
             # print(nextCell.pathCost)
             # print 'cellpath cost + computeLadditive cost is '
@@ -47,7 +47,7 @@ class GREEDYPlanner(CellBasedForwardSearch):
             # self.popCellFromQueue()
             # print'pop cell from queue is'
             # print(self.popCellFromQueue())
-            nextCell.pathCost = self.computeLStageAdditiveCost(nextCell, self.goal)
+            nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell, self.goal)
             self.markCellAsVisitedAndRecordParent(nextCell, cell)
             self.numberOfCellsVisited = self.numberOfCellsVisited + 1
 
