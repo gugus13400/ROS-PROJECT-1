@@ -157,6 +157,24 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
     # what heuristics, etc. are used. The cost computed here takes account
     # of the terrain traversability cost using an equation a bit like that
     # presented in the lectures.
+    def computeGreedy(self, nextCell):
+        bressenham = list(bresenham(nextCell.coords[0], nextCell.coords[1], self.goal.coords[0], self.goal.coords[1]))
+        L_total = 0
+        previous_cell = nextCell
+        for cells in bressenham:
+            theCellIs = self.searchGrid.getCellFromCoords(cells)
+            dx = abs(theCellIs.coords[0] - previous_cell.coords[0])
+            dy = abs(theCellIs.coords[1] - previous_cell.coords[1])
+            cost = min(1+(0.2/((1.75-theCellIs.terrainCost)**2))**2, 1000)
+            L_total += cost * sqrt(dx * dx + dy * dy)
+            previous_cell = theCellIs
+
+        # dx = abs(nextCell.coords[0] - self.goal.coords[0])
+        # dy = abs(nextCell.coords[1] - self.goal.coords[1])
+        # L = sqrt(dx *dx + dy * dy)
+        #
+        # return L
+        return L_total
     def computeLStageAdditiveCost(self, parentCell, cell):
         # If the parent is empty, this is the start of the path and the
         # cost is 0.
@@ -248,7 +266,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
 
                     #nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell) # DIJKSTRA #
 
-                    nextCell.pathCost = self.computeLStageAdditiveCost(nextCell, self.goal) # GREEDY #
+                    nextCell.pathCost = self.computeGreedy(nextCell) # GREEDY #
 
                     #nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell) + self.computeHeuristicManhattan(nextCell) # Manhattan #
 
