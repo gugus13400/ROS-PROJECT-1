@@ -109,13 +109,13 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
             L_2 += cost * (dx + dy)
             previous_cell = theCellIs
 
-        # dx1 = nextCell.coords[0] - self.goal.coords[0]
-        # dy1 = nextCell.coords[1] - self.goal.coords[1]
-        # dx2 = self.start.coords[0] - self.goal.coords[0]
-        # dy2 = self.start.coords[1] - self.goal.coords[1]
-        # cross = abs(dx1 * dy2 - dx2 * dy1)
+        dx1 = nextCell.coords[0] - self.goal.coords[0]
+        dy1 = nextCell.coords[1] - self.goal.coords[1]
+        dx2 = self.start.coords[0] - self.goal.coords[0]
+        dy2 = self.start.coords[1] - self.goal.coords[1]
+        cross = abs(dx1 * dy2 - dx2 * dy1)
 
-        return (L_1 + L_2) #* cross
+        return (L_1 + L_2) * cross
 
     def computeHeuristicEuclidian(self, nextCell):
         bressenham = list(bresenham(nextCell.coords[0], nextCell.coords[1], self.goal.coords[0], self.goal.coords[1]))
