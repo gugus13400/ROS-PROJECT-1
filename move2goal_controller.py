@@ -26,10 +26,10 @@ class Move2GoalController(ControllerBase):
 
         self.driveAngleErrorTolerance = math.radians(rospy.get_param('angle_error_tolerance', 1))
 
-	self.totalTime = 0
-	self.timeForEachLoop = 0
+        self.totalTime = 0
+        self.timeForEachLoop = 0
 
-	
+
     def get_distance(self, goal_x, goal_y):
         distance = sqrt(pow((goal_x - self.pose.x), 2) + pow((goal_y - self.pose.y), 2))
         return distance
@@ -49,15 +49,16 @@ class Move2GoalController(ControllerBase):
         dY = waypoint[1] - self.pose.y
         distanceError = sqrt(dX * dX + dY * dY)
         angleError = self.shortestAngularDistance(self.pose.theta, atan2(dY, dX))
-       
+
+        self.loopStartTime = time.time()
         while (distanceError >= self.distanceErrorTolerance) & (not rospy.is_shutdown()):
-	    self.loopStartTime = time.time()
+
 
             #print("Current Pose: x: {}, y:{} , theta: {}\nGoal: x: {}, y: {}".format(self.pose.x, self.pose.y,
             #                                                                           self.pose.theta, waypoint[0],
             #                                                                           waypoint[1]))
             
-	    print("Distance Error: {}\nAngular Error: {}".format(distanceError, angleError))
+            print("Distance Error: {}\nAngular Error: {}".format(distanceError, angleError))
 
             print("Total Distance Travelled: {}\nTotal Angle Turned: {}".format(self.PathLength, self.TotalTheta))
             
@@ -79,11 +80,12 @@ class Move2GoalController(ControllerBase):
             # Publishing our vel_msg
             self.velocityPublisher.publish(vel_msg)
 
-	    self.messagePublishTime = time.time()
-	    self.timeForEachLoop = self.messagePublishTime - self.loopStartTime
-	    self.totalTime += self.timeForEachLoop		
-	    print("Total Time Elapsed: {}\n".format(self.totalTime))
-				
+            self.messagePublishTime = time.time()
+            self.timeForEachLoop = self.messagePublishTime - self.loopStartTime
+            self.totalTime += self.timeForEachLoop
+            self.loopStartTime = time.time()
+            print("Total Time Elapsed: {}\n".format(self.totalTime))
+
             if (self.plannerDrawer is not None):
                 self.plannerDrawer.flushAndUpdateWindow()
                 
