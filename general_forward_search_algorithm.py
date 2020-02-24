@@ -259,9 +259,9 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
 
                     #nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell) # DIJKSTRA #
 
-                    nextCell.pathCost = self.computeEuclidianCost(nextCell, self.goal) # GREEDY #
+                    #nextCell.pathCost = self.computeEuclidianCost(nextCell, self.goal) # GREEDY #
 
-                    #nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell) + self.computeHeuristicManhattan(nextCell) # Manhattan #
+                    nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell) + self.computeHeuristicManhattan(nextCell) # Manhattan #
 
                     #nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell, cell) + self.computeHeuristicEuclidian(nextCell)  # Euclidian #
 
