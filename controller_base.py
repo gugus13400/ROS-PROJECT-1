@@ -47,12 +47,14 @@ class ControllerBase(object):
         self.TotalTheta = 0
         self.PathLength = 0
 
+        self.pose = 0
     # Get the pose of the robot. Store this in a Pose2D structure because
     # this is easy to use. Use radians for angles because these are used
     # inside the control system.
     def odometryCallback(self, odometry):
         self.MoveLength = 0
         self.MoveTheta = 0
+
 
         odometryPose = odometry.pose.pose
 
@@ -68,8 +70,6 @@ class ControllerBase(object):
 
         self.MoveLength = math.sqrt((pose.x - self.pose.x)**2 + (pose.y - self.pose.y)**2)
         self.PathLength += self.MoveLength
-        print('the path length is : ')
-        print(self.PathLength)
         self.MoveLength = 0
 
         self.MoveTheta = math.degrees(abs(pose.theta - self.pose.theta))
