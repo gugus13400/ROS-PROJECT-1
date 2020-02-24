@@ -118,6 +118,11 @@ class ControllerBase(object):
         if rospy.is_shutdown() is False:
             self.rotateToGoalOrientation(goalOrientation)
 
+        self.MoveLength = 0
+        self.MoveTheta = 0
+        self.TotalTheta = 0
+        self.PathLength = 0
+
         self.totalTime = 0
         self.timeForEachLoop = 0
         self.loopStartTime = 0
