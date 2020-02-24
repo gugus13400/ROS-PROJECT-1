@@ -13,9 +13,6 @@ import math
 
 class ControllerBase(object):
 
-    # EDIT: Add a class variable for the total pathlength, last move length and last angle turned.	
-
-	
     def __init__(self, occupancyGrid):
 
         rospy.wait_for_message('/robot0/odom', Odometry)
@@ -34,18 +31,12 @@ class ControllerBase(object):
         # Set the pose to an initial value to stop things crashing
         self.pose = Pose2D()
 
-
         # Store the occupany grid - used to transform from cell
         # coordinates to world driving coordinates.
         self.occupancyGrid = occupancyGrid
         
         # This is the rate at which we broadcast updates to the simulator in Hz.
         self.rate = rospy.Rate(10)
-
-	self.MoveLength = 0
-    	self.MoveTheta = 0
-    	self.TotalTheta = 0
-	self.PathLength = 0
 
     # Get the pose of the robot. Store this in a Pose2D structure because
     # this is easy to use. Use radians for angles because these are used
@@ -61,20 +52,7 @@ class ControllerBase(object):
         pose.x = position.x
         pose.y = position.y
         pose.theta = 2 * atan2(orientation.z, orientation.w)
-
-	#pose is the current position, and self.pose is the previous one
-
-	self.MoveLength = math.sqrt((pose.x - self.pose.x)**2 + (pose.y - self.pose.y)**2)
-	self.PathLength += self.MoveLength
-	self.MoveLength = 0
-
-        self.MoveTheta = math.degrees(abs(pose.theta - self.pose.theta))
-	self.TotalTheta += self.MoveTheta
-	self.MoveTheta = 0
-	
-
         self.pose = pose
-
 
     # Return the most up-to-date pose of the robot
     def getCurrentPose(self):
@@ -93,13 +71,7 @@ class ControllerBase(object):
     # make sure the graphics are redrawn properly.
     def drivePathToGoal(self, path, goalOrientation, plannerDrawer):
         self.plannerDrawer = plannerDrawer
-	
-	##EDIT EDIT
-		
-	self.lastposeX = self.pose.x
-	self.lastposeY = self.pose.y
-	self.lastposeTheta = self.pose.theta
-	
+
         rospy.loginfo('Driving path to goal with ' + str(len(path.waypoints)) + ' waypoint(s)')
         
         # Drive to each waypoint in turn
