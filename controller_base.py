@@ -40,7 +40,7 @@ class ControllerBase(object):
         self.occupancyGrid = occupancyGrid
         
         # This is the rate at which we broadcast updates to the simulator in Hz.
-        self.rate = rospy.Rate(1)
+        self.rate = rospy.Rate(100)
 
         self.MoveLength = 0
         self.MoveTheta = 0
