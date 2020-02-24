@@ -47,15 +47,15 @@ class ControllerBase(object):
         self.TotalTheta = 0
         self.PathLength = 0
 
-        odometryPose = odometry.pose.pose
-        self.pose = Pose2D()
-
-        position = odometryPose.position
-        orientation = odometryPose.orientation
-
-        self.pose.x = position.x
-        self.pose.y = position.y
-        self.pose.theta = 2 * atan2(orientation.z, orientation.w)
+        # odometryPose = odometry.pose.pose
+        # self.pose = Pose2D()
+        #
+        # position = odometryPose.position
+        # orientation = odometryPose.orientation
+        #
+        # self.pose.x = position.x
+        # self.pose.y = position.y
+        # self.pose.theta = 2 * atan2(orientation.z, orientation.w)
     # Get the pose of the robot. Store this in a Pose2D structure because
     # this is easy to use. Use radians for angles because these are used
     # inside the control system.
@@ -77,6 +77,13 @@ class ControllerBase(object):
 
 
         self.MoveLength = math.sqrt((pose.x - self.pose.x)**2 + (pose.y - self.pose.y)**2)
+        print('self pose is : ')
+        print(self.pose.x)
+        print (self.pose.y)
+
+        print('pose.x is : ')
+        print(pose.x)
+        print(pose.y)
         self.PathLength += self.MoveLength
         self.MoveLength = 0
 
