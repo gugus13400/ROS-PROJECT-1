@@ -139,7 +139,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         # dx2 = self.start.coords[0] - self.goal.coords[0]
         # dy2 = self.start.coords[1] - self.goal.coords[1]
         # cross = abs(dx1 * dy2 - dx2 * dy1)
-        return L_total
+        return 0.5*L_total
 
     def computeHeuristicOctile(self, nextCell):
         dx = abs(nextCell.coords[0] - self.goal.coords[0])
@@ -261,7 +261,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
 
                     #nextCell.pathCost = self.computeEuclidianCost(nextCell, self.goal) # GREEDY #
 
-                    nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell) + 10 * self.computeHeuristicManhattan(nextCell) # Manhattan #
+                    nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell) +  self.computeHeuristicManhattan(nextCell) # Manhattan #
 
                     #nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell, cell) + self.computeHeuristicEuclidian(nextCell)  # Euclidian #
 
