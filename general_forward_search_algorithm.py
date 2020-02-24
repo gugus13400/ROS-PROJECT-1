@@ -257,9 +257,9 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
                 if (self.hasCellBeenVisitedAlready(nextCell) == False):
                     self.markCellAsVisitedAndRecordParent(nextCell, cell)
 
-                    #nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell) # DIJKSTRA #
+                    nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell) # DIJKSTRA #
 
-                    nextCell.pathCost = self.computeEuclidianCost(nextCell, self.goal) # GREEDY #
+                    #nextCell.pathCost = self.computeEuclidianCost(nextCell, self.goal) # GREEDY #
 
                     #nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell) + self.computeHeuristicManhattan(nextCell) # Manhattan #
 
