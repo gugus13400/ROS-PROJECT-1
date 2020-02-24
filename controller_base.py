@@ -63,7 +63,6 @@ class ControllerBase(object):
         # self.MoveLength = 0
         # self.MoveTheta = 0
 
-
         odometryPose = odometry.pose.pose
 
         pose = Pose2D()
@@ -77,13 +76,6 @@ class ControllerBase(object):
 
 
         self.MoveLength = math.sqrt((pose.x - self.pose.x)**2 + (pose.y - self.pose.y)**2)
-        print('self pose is : ')
-        print(self.pose.x)
-        print (self.pose.y)
-
-        print('pose.x is : ')
-        print(pose.x)
-        print(pose.y)
         self.PathLength += self.MoveLength
         self.MoveLength = 0
 
