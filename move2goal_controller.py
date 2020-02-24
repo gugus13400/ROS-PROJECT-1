@@ -50,8 +50,9 @@ class Move2GoalController(ControllerBase):
         distanceError = sqrt(dX * dX + dY * dY)
         angleError = self.shortestAngularDistance(self.pose.theta, atan2(dY, dX))
 
-        self.loopStartTime = time.time()
+
         while (distanceError >= self.distanceErrorTolerance) & (not rospy.is_shutdown()):
+            self.loopStartTime = time.time()
 
 
             #print("Current Pose: x: {}, y:{} , theta: {}\nGoal: x: {}, y: {}".format(self.pose.x, self.pose.y,
