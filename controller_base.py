@@ -68,6 +68,8 @@ class ControllerBase(object):
 
         self.MoveLength = math.sqrt((pose.x - self.pose.x)**2 + (pose.y - self.pose.y)**2)
         self.PathLength += self.MoveLength
+        print('the path length is : ')
+        print(self.PathLength)
         self.MoveLength = 0
 
         self.MoveTheta = math.degrees(abs(pose.theta - self.pose.theta))
