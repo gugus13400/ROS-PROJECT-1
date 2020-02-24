@@ -28,6 +28,7 @@ class Move2GoalController(ControllerBase):
 
         self.totalTime = 0
         self.timeForEachLoop = 0
+        self.loopStartTime = 0
         print('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
 
     def get_distance(self, goal_x, goal_y):
