@@ -53,8 +53,6 @@ class ControllerBase(object):
     def odometryCallback(self, odometry):
         self.MoveLength = 0
         self.MoveTheta = 0
-        self.TotalTheta = 0
-        self.PathLength = 0
 
         odometryPose = odometry.pose.pose
 
