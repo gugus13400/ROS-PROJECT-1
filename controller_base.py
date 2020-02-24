@@ -116,6 +116,7 @@ class ControllerBase(object):
         
         # Drive to each waypoint in turn
         self.PathLength = 0
+        self.TotalTheta = 0
 
         for waypointNumber in range(0, len(path.waypoints)):
             cell = path.waypoints[waypointNumber]
