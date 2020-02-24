@@ -95,7 +95,7 @@ class ControllerBase(object):
 
     ##EDIT EDIT
 
-        self.lastposeX = self.pose.xd
+        self.lastposeX = self.pose.x
         self.lastposeY = self.pose.y
         self.lastposeTheta = self.pose.theta
 
