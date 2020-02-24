@@ -158,7 +158,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
     # of the terrain traversability cost using an equation a bit like that
     # presented in the lectures.
     def computeEuclidianCost(self, nextCell, goalCell):
-        if (parentCell is None):
+        if (nextCell is None):
             return
 
             # Travel cost is Cartesian distance
