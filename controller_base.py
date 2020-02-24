@@ -47,7 +47,8 @@ class ControllerBase(object):
         self.TotalTheta = 0
         self.PathLength = 0
 
-        pose = Pose2D()
+        odometryPose = odometry.pose.pose
+        self.pose = Pose2D()
 
         position = odometryPose.position
         orientation = odometryPose.orientation
