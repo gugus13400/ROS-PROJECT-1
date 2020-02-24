@@ -118,7 +118,7 @@ class ControllerBase(object):
         self.PathLength = 0
         self.TotalTheta = 0
 
-        for waypointNumber in range(0, len(path.waypoints), 2):  #only going to every 3 waypoints
+        for waypointNumber in range(0, len(path.waypoints), 15):  #only going to every 3 waypoints
             cell = path.waypoints[waypointNumber]
             waypoint = self.occupancyGrid.getWorldCoordinatesFromCellCoordinates(cell.coords)
             rospy.loginfo("Driving to waypoint (%f, %f)", waypoint[0], waypoint[1])
