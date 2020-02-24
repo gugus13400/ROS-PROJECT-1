@@ -51,6 +51,11 @@ class ControllerBase(object):
     # this is easy to use. Use radians for angles because these are used
     # inside the control system.
     def odometryCallback(self, odometry):
+        self.MoveLength = 0
+        self.MoveTheta = 0
+        self.TotalTheta = 0
+        self.PathLength = 0
+
         odometryPose = odometry.pose.pose
 
         pose = Pose2D()
@@ -64,6 +69,9 @@ class ControllerBase(object):
 
 
         self.MoveLength = math.sqrt((pose.x - self.pose.x)**2 + (pose.y - self.pose.y)**2)
+        print('cacacacaaaaaaaaaaaaaaaaaaaaaaa')
+        print(self.MoveLength)
+        print('cacacacaaaaaaaaaaaaaaaaaaaaaaa')
         self.PathLength += self.MoveLength
         self.MoveLength = 0
 

@@ -26,11 +26,6 @@ class Move2GoalController(ControllerBase):
 
         self.driveAngleErrorTolerance = math.radians(rospy.get_param('angle_error_tolerance', 1))
 
-        self.MoveLength = 0
-        self.MoveTheta = 0
-        self.TotalTheta = 0
-        self.PathLength = 0
-
         self.totalTime = 0
         self.timeForEachLoop = 0
         self.loopStartTime = 0
