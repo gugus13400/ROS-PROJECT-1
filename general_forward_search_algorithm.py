@@ -261,7 +261,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
 
                     #nextCell.pathCost = self.computeEuclidianCost(nextCell, self.goal) # GREEDY #
 
-                    nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell) + 5 * self.computeHeuristicManhattan(nextCell) # Manhattan #
+                    nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell) + 10 * self.computeHeuristicManhattan(nextCell) # Manhattan #
 
                     #nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell, cell) + self.computeHeuristicEuclidian(nextCell)  # Euclidian #
 
