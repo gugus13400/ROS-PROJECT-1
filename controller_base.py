@@ -117,4 +117,8 @@ class ControllerBase(object):
         # Finish off by rotating the robot to the final configuration
         if rospy.is_shutdown() is False:
             self.rotateToGoalOrientation(goalOrientation)
- 
+
+        self.totalTime = 0
+        self.timeForEachLoop = 0
+        self.loopStartTime = 0
+
