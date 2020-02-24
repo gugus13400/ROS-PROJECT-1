@@ -83,7 +83,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         return self.angle_deg
 
     def computeHeuristicConstant(self):
-        constant = 100
+        constant = 10
         return constant
 
     def computeHeuristicManhattan(self, nextCell):
@@ -264,9 +264,9 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
                 if (self.hasCellBeenVisitedAlready(nextCell) == False):
                     self.markCellAsVisitedAndRecordParent(nextCell, cell)
 
-                    nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell) # DIJKSTRA #
+                    #nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell) # DIJKSTRA #
 
-                    #nextCell.pathCost = self.computeLStageAdditiveCost(nextCell, self.goal) # GREEDY #
+                    nextCell.pathCost = self.computeLStageAdditiveCost(nextCell, self.goal) # GREEDY #
 
                     #nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell) + self.computeHeuristicManhattan(nextCell) # Manhattan #
 
