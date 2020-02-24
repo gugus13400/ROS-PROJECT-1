@@ -67,9 +67,6 @@ class ControllerBase(object):
 
 
         self.MoveLength = math.sqrt((pose.x - self.pose.x)**2 + (pose.y - self.pose.y)**2)
-        print('cacacacaaaaaaaaaaaaaaaaaaaaaaa')
-        print(self.MoveLength)
-        print('cacacacaaaaaaaaaaaaaaaaaaaaaaa')
         self.PathLength += self.MoveLength
         self.MoveLength = 0
 
