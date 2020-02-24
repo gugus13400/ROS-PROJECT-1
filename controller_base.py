@@ -105,6 +105,7 @@ class ControllerBase(object):
     def drivePathToGoal(self, path, goalOrientation, plannerDrawer):
         self.plannerDrawer = plannerDrawer
 
+        self.PathLength = 0
     ##EDIT EDIT
 
         self.lastposeX = self.pose.x
