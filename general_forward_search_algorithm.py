@@ -126,7 +126,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
             dx = abs(theCellIs.coords[0] - previous_cell.coords[0])
             dy = abs(theCellIs.coords[1] - previous_cell.coords[1])
             cost = min(1+(0.2/((1.75-theCellIs.terrainCost)**2))**2, 1000)
-            L_total += cost * sqrt(dx * dx + dy * dy)
+            L_total += cost * (sqrt(dx * dx + dy * dy))
             previous_cell = theCellIs
 
         # dx = abs(nextCell.coords[0] - self.goal.coords[0])
@@ -261,7 +261,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
 
                     #nextCell.pathCost = self.computeEuclidianCost(nextCell, self.goal) # GREEDY #
 
-                    nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell) + self.computeHeuristicManhattan(nextCell) # Manhattan #
+                    nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell) + 5 * self.computeHeuristicManhattan(nextCell) # Manhattan #
 
                     #nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell, cell) + self.computeHeuristicEuclidian(nextCell)  # Euclidian #
 
