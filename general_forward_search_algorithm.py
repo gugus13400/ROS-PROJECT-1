@@ -139,7 +139,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         # dx2 = self.start.coords[0] - self.goal.coords[0]
         # dy2 = self.start.coords[1] - self.goal.coords[1]
         # cross = abs(dx1 * dy2 - dx2 * dy1)
-        return 0.5*L_total
+        return L_total
 
     def computeHeuristicOctile(self, nextCell):
         dx = abs(nextCell.coords[0] - self.goal.coords[0])
