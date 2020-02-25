@@ -41,7 +41,6 @@ class ASTARPlanner(CellBasedForwardSearch):
     def resolveDuplicate(self, nextCell, cell):
         if nextCell.pathCost > cell.pathCost + self.computeLStageAdditiveCost(nextCell, cell) + self.computeHeuristicManhattan(nextCell):
 
-
             nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell) +  self.computeHeuristicManhattan(nextCell) # Manhattan #
 
             #nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell, cell) + self.computeHeuristicEuclidian(nextCell)  # Euclidian #
