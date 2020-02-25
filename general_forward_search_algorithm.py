@@ -115,7 +115,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         # dy2 = self.start.coords[1] - self.goal.coords[1]
         # cross = abs(dx1 * dy2 - dx2 * dy1)
 
-        return (L_1 + L_2) * 1.1 #* cross
+        return (L_1 + L_2) *1.5 #* 1.1 #* cross
 
     def computeHeuristicEuclidian(self, nextCell):
         bressenham = list(bresenham(nextCell.coords[0], nextCell.coords[1], self.goal.coords[0], self.goal.coords[1]))
@@ -134,7 +134,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         # dx2 = self.start.coords[0] - self.goal.coords[0]
         # dy2 = self.start.coords[1] - self.goal.coords[1]
         # cross = abs(dx1 * dy2 - dx2 * dy1)
-        return L_total *1.1 #*cross
+        return L_total #*1.1 #*cross
 
     def computeHeuristicOctile(self, nextCell):
         dx = abs(nextCell.coords[0] - self.goal.coords[0])
@@ -145,7 +145,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         # dx2 = self.start.coords[0] - self.goal.coords[0]
         # dy2 = self.start.coords[1] - self.goal.coords[1]
         # cross = abs(dx1 * dy2 - dx2 * dy1)
-        return ((max(dx, dy)) + (sqrt(2) - 1) * min(dx, dy))*1.1 #* cross
+        return ((max(dx, dy)) + (sqrt(2) - 1) * min(dx, dy)) #*1.1 #* cross
 
     # Compute the additive cost of performing a step from the parent to the
     # current cell. This calculation is carried out the same way no matter
@@ -256,13 +256,13 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
 
                     #nextCell.pathCost = self.computeEuclidianCost(nextCell, self.goal) # GREEDY #
 
-                    #nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell) + self.computeHeuristicManhattan(nextCell) # Manhattan #
+                    nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell) + self.computeHeuristicManhattan(nextCell) # Manhattan #
 
                     #nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell, cell) + self.computeHeuristicEuclidian(nextCell)  # Euclidian #
 
                     #nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell) + self.computeHeuristicOctile(nextCell) # Octile #
 
-                    nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell, cell) + self.computeHeuristicConstant() # Constant #
+                    #nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell, cell) + self.computeHeuristicConstant() # Constant #
 
 
                     self.pushCellOntoQueue(nextCell) #push the cell information ( cell name + distance to goal in the priority queue)
