@@ -15,6 +15,15 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
     # template for forward search. It includes a lot of methods for
     # managing the graphical output as well.
 
+    # Define some class variables. As the popCounter and pushCounter will only be used
+    # when the 'while' loop of LaVelle's forward search algorithm is implemented, the
+    # starting value for the QueueSize and MaxQueueSize is set to 1, as there is already
+    # one cell in the queue.  
+    NumberOfPushes = 0
+    NumberOfPops = 0
+    QueueSize = 1
+    MaxQueueSize = 1
+
     def __init__(self, title, occupancyGrid):
         PlannerBase.__init__(self, title, occupancyGrid)
 
@@ -24,6 +33,10 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
     # These methods manage the queue of cells to be visied.
     def pushCellOntoQueue(self, cell):
         raise NotImplementedError()
+
+    # This method will be used to keep track of the number of pushes
+    def pushCounter(self):
+	GeneralForwardSearchAlgorithm.NumberOfPushes += 1
 
     # This method returns a boolean - true if the queue is empty,
     # false if it still has some cells on it.
@@ -60,6 +73,24 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
     def resolveDuplicate(self, nextCell, cell):
         raise NotImplementedError()
 
+    def popCounter(self):
+	GeneralForwardSearchAlgorithm.NumberOfPops += 1
+
+    # This method is used to calculate the new QueueSize.
+    # This method will be used in the 'while' loop of LaVelle's
+    # algorithm, after each pop and push. The pop and push counter are
+    # reset to 0 after each pop and push. Then the new QueuSize can be 
+    # set to the MaxQueueSize if it is greater than the previous value.
+    def setMaxQueueSize(self):
+	GeneralForwardSearchAlgorithm.QueueSize = GeneralForwardSearchAlgorithm.QueueSize + (GeneralForwardSearchAlgorithm.NumberOfPushes -  GeneralForwardSearchAlgorithm.NumberOfPops)
+	
+	GeneralForwardSearchAlgorithm.NumberOfPushes = 0
+	GeneralForwardSearchAlgorithm.NumberOfPops = 0
+
+	if (GeneralForwardSearchAlgorithm.QueueSize > GeneralForwardSearchAlgorithm.MaxQueueSize):
+	    GeneralForwardSearchAlgorithm.MaxQueueSize = GeneralForwardSearchAlgorithm.QueueSize
+
+
     def computeAngle(self, pathEndCell, cell, parentParentCell):
 
         x_vector_coordinate = pathEndCell.coords[0] - cell.coords[0]
@@ -68,9 +99,6 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         x_vector_coordinate_parent = cell.coords[0] - parentParentCell.coords[0]
         y_vector_coordinate_parent = cell.coords[1] - parentParentCell.coords[1]
 
-        # print('The Pathend cell coord in x is :' + str(pathEndCell.coords[0]) + 'and in y is: ' + str(pathEndCell.coords[1]) )
-        # print('The cell coord in x is :' + str(cell.coords[0]) + 'and in y is: ' + str(cell.coords[1]))
-        # print('The parent parent cell coord in x is :' + str(parentParentCell.coords[0]) + 'and in y is: ' + str(parentParentCell.coords[1]))
         vector_a = x_vector_coordinate * x_vector_coordinate_parent
         vector_b = y_vector_coordinate * y_vector_coordinate_parent
 
@@ -84,7 +112,12 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
 
     def computeHeuristicConstant(self):
         constant = 10
-        return constant
+ 	# dx1 = nextCell.coords[0] - self.goal.coords[0]
+        # dy1 = nextCell.coords[1] - self.goal.coords[1]
+        # dx2 = self.start.coords[0] - self.goal.coords[0]
+        # dy2 = self.start.coords[1] - self.goal.coords[1]
+        # cross = abs(dx1 * dy2 - dx2 * dy1) <-- uncomment to compute tie breaking heuristic
+        return constant #*1.1 <-- uncomment to compute weighted heuristic #*cross <-- uncomment to compute tie breaking heuristic
 
     def computeHeuristicManhattan(self, nextCell):
         bressenham_1 = list(bresenham(nextCell.coords[0], nextCell.coords[1], nextCell.coords[0], self.goal.coords[1]))
@@ -113,9 +146,9 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         # dy1 = nextCell.coords[1] - self.goal.coords[1]
         # dx2 = self.start.coords[0] - self.goal.coords[0]
         # dy2 = self.start.coords[1] - self.goal.coords[1]
-        # cross = abs(dx1 * dy2 - dx2 * dy1)
+        # cross = abs(dx1 * dy2 - dx2 * dy1) <-- uncomment to compute tie breaking heuristic
 
-        return (L_1 + L_2) *1.5 #* 1.1 #* cross
+        return (L_1 + L_2) #*1.1 <-- uncomment to compute weighted heuristic #*cross <-- uncomment to compute tie breaking heuristic
 
     def computeHeuristicEuclidian(self, nextCell):
         bressenham = list(bresenham(nextCell.coords[0], nextCell.coords[1], self.goal.coords[0], self.goal.coords[1]))
@@ -134,7 +167,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         # dx2 = self.start.coords[0] - self.goal.coords[0]
         # dy2 = self.start.coords[1] - self.goal.coords[1]
         # cross = abs(dx1 * dy2 - dx2 * dy1)
-        return L_total #*1.1 #*cross
+        return L_total #*1.1 <-- uncomment to compute weighted heureistic #*cross <-- uncomment to compute tie breaking heuristic
 
     def computeHeuristicOctile(self, nextCell):
         dx = abs(nextCell.coords[0] - self.goal.coords[0])
@@ -145,7 +178,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         # dx2 = self.start.coords[0] - self.goal.coords[0]
         # dy2 = self.start.coords[1] - self.goal.coords[1]
         # cross = abs(dx1 * dy2 - dx2 * dy1)
-        return ((max(dx, dy)) + (sqrt(2) - 1) * min(dx, dy)) #*1.1 #* cross
+        return ((max(dx, dy)) + (sqrt(2) - 1) * min(dx, dy)) #*1.1 <-- uncomment to compute weighted heuristic #*cross <-- uncomment to compute tie breaking heuristic
 
     # Compute the additive cost of performing a step from the parent to the
     # current cell. This calculation is carried out the same way no matter
@@ -242,6 +275,12 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
             cell = self.popCellFromQueue()
             # print(cell)
 
+	    # Increase the popCounter by 1
+	    self.popCounter()
+	    # Calculate the current Queuesize, then reset the popCounter and pushCounter to 0
+	    # and set the QueueSize to the maxQueueSize if it is bigger than the previous.
+	    self.setMaxQueueSize()
+
 
             if (self.hasGoalBeenReached(cell) == True):
                 self.goalReached = True
@@ -256,7 +295,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
 
                     #nextCell.pathCost = self.computeEuclidianCost(nextCell, self.goal) # GREEDY #
 
-                    nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell) + self.computeHeuristicManhattan(nextCell) # Manhattan #
+                    nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell,cell) +  self.computeHeuristicManhattan(nextCell) # Manhattan #
 
                     #nextCell.pathCost = cell.pathCost + self.computeLStageAdditiveCost(nextCell, cell) + self.computeHeuristicEuclidian(nextCell)  # Euclidian #
 
@@ -266,6 +305,15 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
 
 
                     self.pushCellOntoQueue(nextCell) #push the cell information ( cell name + distance to goal in the priority queue)
+
+		    # Increase the pushCounter by 1
+		    self.pushCounter()
+		    # Calculate the current Queuesize, reset the pop and push counter to 0
+	            # and set the QueueSize to the maxQueueSize if it is bigger than the previous.
+
+		    self.setMaxQueueSize()
+
+
                     self.numberOfCellsVisited = self.numberOfCellsVisited + 1
 
                 elif (nextCell.label == CellLabel.ALIVE):
@@ -283,6 +331,7 @@ class GeneralForwardSearchAlgorithm(PlannerBase):
         self.drawCurrentState()
         
         print "numberOfCellsVisited = " + str(self.numberOfCellsVisited)
+        print "MaxQueueSize = " + str(GeneralForwardSearchAlgorithm.MaxQueueSize)
 
         
         if self.goalReached:
