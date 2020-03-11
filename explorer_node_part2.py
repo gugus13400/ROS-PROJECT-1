@@ -28,7 +28,7 @@ class ExplorerNode(ExplorerNodeBase):
 	
 	self.currentOdometrySubscriber = rospy.Subscriber('/robot0/odom', Odometry, self.odometryCallback)
 	self.currentRobotPose = Pose2D()
-
+	self.blackList.append((3,38))
 	
     def updateFrontiers(self):
 	pass
@@ -177,6 +177,9 @@ class ExplorerNode(ExplorerNodeBase):
     def chooseNewDestination(self):
 	self.temporaryTransfer = []
 	
+	self.coverageNumerator = 0
+	self.TotalCellsToCover = 100 * 75
+	
 
 	robotX = self.currentRobotPose.x
 	robotY = self.currentRobotPose.y
@@ -189,6 +192,9 @@ class ExplorerNode(ExplorerNodeBase):
         for x in range(0, self.occupancyGrid.getWidthInCells()):
             for y in range(0, self.occupancyGrid.getHeightInCells()):
                 candidate = (x, y)
+		
+		if self.occupancyGrid.getCell(candidate[0], candidate[1]) == 1 or self.occupancyGrid.getCell(candidate[0], candidate[1]) == 0:
+			self.coverageNumerator += 1
 		
 		if self.occupancyGrid.getCell(candidate[0], candidate[1]) == 1 and candidate not in self.blackList:
 			self.blackList.append(candidate)
@@ -207,9 +213,9 @@ class ExplorerNode(ExplorerNodeBase):
 		self.temporaryTransfer.append(take)
 		self.pushTransfer(len(take), take)
 	
-	print('The Initial List of Frontiers is :')
-	print(self.temporaryTransfer)
-	print(len(self.temporaryTransfer))
+	#print('The Initial List of Frontiers is :')
+	#print(self.temporaryTransfer)
+	#print(len(self.temporaryTransfer))
 	self.temporaryTransfer = []
 	
 	while self.transferQueue.empty() == False:
@@ -223,7 +229,7 @@ class ExplorerNode(ExplorerNodeBase):
 		length = len(candidateFrontier)
 		angle = self.angleToTurnWeight(robotAngle, robotX, robotY, nextCellToGo)
 		distance = self.distanceToFrontierWeight(robotPose, nextCellToGo)
-		Weight = -1.5 * angle + 3 * distance + 4 * length
+		Weight = -1 * angle + 2 * distance + 4 * length
 		self.pushWeightedFrontierOnToQueue(Weight * (-1), candidateFrontier)
 	i = 0
 
@@ -242,22 +248,25 @@ class ExplorerNode(ExplorerNodeBase):
 		self.temporaryTransfer.append(take)
 		self.pushTransfer(len(take), take)
 	
-	print('The Final list of Frontiers is :')
-	print(self.temporaryTransfer)
-	print(len(self.temporaryTransfer))
+	#print('The Final list of Frontiers is :')
+	#print(self.temporaryTransfer)
+	#print(len(self.temporaryTransfer))
 	
 	while self.transferQueue.empty() == False:
 		take = self.popTransfer()
 		self.pushFrontierOnToQueue(len(take), take)
 		
       #lalalla
+	
 
 	print('The number of waypoints visited is:')
 	print(self.numberOfWaypoints)
 	
+	coverage = (float(self.coverageNumerator) / self.TotalCellsToCover) * 100
+	print("The Current Coverage is: {}\n %".format(coverage))
+	
 	self.checkForDuplicateFrontiers = []
-	#for element in self.checkForDuplicateFrontiers:
-		#del element
+	
 	while self.listOfFrontiers.empty() == False:
 		caca = self.popFrontierFromQueue()
 
