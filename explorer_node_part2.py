@@ -54,7 +54,7 @@ class ExplorerNode(ExplorerNodeBase):
 	frontier = self.transferQueue.get()
 	return frontier[1]
     
-    def fidingMiddleCellOfAFrontier(self, frontierList):
+    def findingMiddleCellOfAFrontier(self, frontierList):
 	print('The initial plan was to go to that cell:')
 	print(frontierList[0])
 	xTotal = 0
@@ -111,6 +111,19 @@ class ExplorerNode(ExplorerNodeBase):
 	print(distance)
 	return distance
 
+    def updateTheCheckFrontierList(self, deletedFrontier):
+	#print('THE DELETED FRONTIER IS:')
+	#print(deletedFrontier)
+	#print('the alreadyCheckedFrontierlist is :')
+	#print(self.checkForDuplicateFrontiers)
+	#for alreadyCheckedFrontierCells in self.checkForDuplicateFrontiers :
+	#	print('the alreadyCheckedFrontierCells is :')
+	#	print(alreadyCheckedFrontierCells)
+		#if deletedFrontier == alreadyCheckedFrontierCells:
+			#	self.checkForDuplicateFrontiers.remove(alreadyCheckedFrontierCells)
+	#			print('the alreadyCheckedFrontierlist is noow:')
+	#			print(self.checkForDuplicateFrontiers)
+	pass
 
     def checkForDuplicate(self, frontierToCheck):
 	elem_to_find = frontierToCheck
@@ -163,20 +176,16 @@ class ExplorerNode(ExplorerNodeBase):
 	
     def chooseNewDestination(self):
 	self.temporaryTransfer = []
-	#while self.listOfFrontiers.empty() == False:
-		#caca = self.popFrontierFromQueue()
+	
 
 	robotX = self.currentRobotPose.x
 	robotY = self.currentRobotPose.y
 	robotAngle = self.currentRobotPose.theta
 	robotPose = (robotX, robotY)
-	#print(self.blackList)
+	
         candidateGood = False
         destination = None
-      	#print(self.checkForDuplicateFrontiers)
-	#print(len(self.checkForDuplicateFrontiers))
-	#print('this is the list of frontier')
-	#print(self.listOfFrontiers)
+      	
         for x in range(0, self.occupancyGrid.getWidthInCells()):
             for y in range(0, self.occupancyGrid.getHeightInCells()):
                 candidate = (x, y)
@@ -210,19 +219,20 @@ class ExplorerNode(ExplorerNodeBase):
 
 	while self.listOfFrontiers.empty() == False:
 		candidateFrontier = self.popFrontierFromQueue() 
-		nextCellToGo = self.fidingMiddleCellOfAFrontier(candidateFrontier)
+		nextCellToGo = self.findingMiddleCellOfAFrontier(candidateFrontier)
 		length = len(candidateFrontier)
 		angle = self.angleToTurnWeight(robotAngle, robotX, robotY, nextCellToGo)
 		distance = self.distanceToFrontierWeight(robotPose, nextCellToGo)
-		Weight = -1 * angle + 2 * distance + 4 * length
-		self.pushWeightedFrontierOnToQueue(Weight, candidateFrontier)
+		Weight = -1.5 * angle + 3 * distance + 4 * length
+		self.pushWeightedFrontierOnToQueue(Weight * (-1), candidateFrontier)
 	i = 0
 
 	while self.weightPriorityQueue.empty() == False:
 		isItTheHighestWeightedFrontier = self.popWeightedFrontierFromQueue()
 		if i == 0:
 			candidateGood = True
-			destination = self.fidingMiddleCellOfAFrontier(isItTheHighestWeightedFrontier)
+			destination = self.findingMiddleCellOfAFrontier(isItTheHighestWeightedFrontier)
+			#self.updateTheCheckFrontierList(isItTheHighestWeightedFrontier)
 			i += 1
 		else:
 			self.pushFrontierOnToQueue(len(isItTheHighestWeightedFrontier), isItTheHighestWeightedFrontier)
@@ -239,9 +249,59 @@ class ExplorerNode(ExplorerNodeBase):
 	while self.transferQueue.empty() == False:
 		take = self.popTransfer()
 		self.pushFrontierOnToQueue(len(take), take)
-	
 		
-       	#DO THIS FOR EVERY FRONTIER
+      #lalalla
+
+	print('The number of waypoints visited is:')
+	print(self.numberOfWaypoints)
+	
+	self.checkForDuplicateFrontiers = []
+	#for element in self.checkForDuplicateFrontiers:
+		#del element
+	while self.listOfFrontiers.empty() == False:
+		caca = self.popFrontierFromQueue()
+
+        return candidateGood, destination
+
+    def destinationReached(self, goal, goalReached):
+        if goalReached is False:
+#             print 'Adding ' + str(goal) + ' to the naughty step'
+            self.blackList.append(goal)
+
+    def getNextSetOfCellsToBeVisited(self, cell):
+
+        # self stores the set of valid actions / cells
+        cells = list();
+
+        # Go through all the neighbours and add the cells if they
+        # don't fall outside the grid and they aren't the cell we
+        # started with. The order has been manually written down to
+        # create a spiral.
+        self.pushBackCandidateCellIfValid(cell, cells, 0, -1)
+        self.pushBackCandidateCellIfValid(cell, cells, 1, -1)
+        self.pushBackCandidateCellIfValid(cell, cells, 1, 0)
+        self.pushBackCandidateCellIfValid(cell, cells, 1, 1)
+        self.pushBackCandidateCellIfValid(cell, cells, 0, 1)
+        self.pushBackCandidateCellIfValid(cell, cells, -1, 1)
+        self.pushBackCandidateCellIfValid(cell, cells, -1, 0)
+        self.pushBackCandidateCellIfValid(cell, cells, -1, -1)
+
+        return cells
+
+    # This helper method checks if the robot, at cell.coords, can move
+    # to cell.coords+(offsetX, offsetY). Reasons why it can't do this
+    # include falling off the edge of the map or running into an
+    # obstacle.
+    def pushBackCandidateCellIfValid(self, cell, cells, offsetX, offsetY):
+        newX = cell[0] + offsetX
+        newY = cell[1] + offsetY
+        extent = self.occupancyGrid.getExtentInCells()
+        if ((newX >= 0) & (newX < extent[0]) \
+            & (newY >= 0) & (newY < extent[1])):
+            newCell = (newX, newY)
+            cells.append(newCell)
+
+ 	#DO THIS FOR EVERY FRONTIER
 
 	#candidateFrontier1 = self.popFrontierFromQueue() 
 	#candidateFrontier2 = self.popFrontierFromQueue()
@@ -288,47 +348,4 @@ class ExplorerNode(ExplorerNodeBase):
 	#	self.numberOfWaypoints += 1
 
         # If we got a good candidate, use it
-
-	print('The number of waypoints visited is:')
-	print(self.numberOfWaypoints)
-        return candidateGood, destination
-
-    def destinationReached(self, goal, goalReached):
-        if goalReached is False:
-#             print 'Adding ' + str(goal) + ' to the naughty step'
-            self.blackList.append(goal)
-
-    def getNextSetOfCellsToBeVisited(self, cell):
-
-        # self stores the set of valid actions / cells
-        cells = list();
-
-        # Go through all the neighbours and add the cells if they
-        # don't fall outside the grid and they aren't the cell we
-        # started with. The order has been manually written down to
-        # create a spiral.
-        self.pushBackCandidateCellIfValid(cell, cells, 0, -1)
-        self.pushBackCandidateCellIfValid(cell, cells, 1, -1)
-        self.pushBackCandidateCellIfValid(cell, cells, 1, 0)
-        self.pushBackCandidateCellIfValid(cell, cells, 1, 1)
-        self.pushBackCandidateCellIfValid(cell, cells, 0, 1)
-        self.pushBackCandidateCellIfValid(cell, cells, -1, 1)
-        self.pushBackCandidateCellIfValid(cell, cells, -1, 0)
-        self.pushBackCandidateCellIfValid(cell, cells, -1, -1)
-
-        return cells
-
-    # This helper method checks if the robot, at cell.coords, can move
-    # to cell.coords+(offsetX, offsetY). Reasons why it can't do this
-    # include falling off the edge of the map or running into an
-    # obstacle.
-    def pushBackCandidateCellIfValid(self, cell, cells, offsetX, offsetY):
-        newX = cell[0] + offsetX
-        newY = cell[1] + offsetY
-        extent = self.occupancyGrid.getExtentInCells()
-        if ((newX >= 0) & (newX < extent[0]) \
-            & (newY >= 0) & (newY < extent[1])):
-            newCell = (newX, newY)
-            cells.append(newCell)
-
             
