@@ -28,7 +28,6 @@ class ExplorerNode(ExplorerNodeBase):
 	
 	self.currentOdometrySubscriber = rospy.Subscriber('/robot0/odom', Odometry, self.odometryCallback)
 	self.currentRobotPose = Pose2D()
-	self.blackList.append((3,38))
 	
     def updateFrontiers(self):
 	pass
@@ -208,19 +207,19 @@ class ExplorerNode(ExplorerNodeBase):
 			if candidateGood is True:
 				self.updateFrontiersCell(candidate)
 
-	while self.listOfFrontiers.empty() == False:
-		take = self.popFrontierFromQueue() 
-		self.temporaryTransfer.append(take)
-		self.pushTransfer(len(take), take)
+	#while self.listOfFrontiers.empty() == False:
+		#take = self.popFrontierFromQueue() 
+	#	self.temporaryTransfer.append(take)
+		#self.pushTransfer(len(take), take)
 	
 	#print('The Initial List of Frontiers is :')
 	#print(self.temporaryTransfer)
 	#print(len(self.temporaryTransfer))
-	self.temporaryTransfer = []
+	#self.temporaryTransfer = []
 	
-	while self.transferQueue.empty() == False:
-		take = self.popTransfer()
-		self.pushFrontierOnToQueue(len(take), take)
+	#while self.transferQueue.empty() == False:
+		#take = self.popTransfer()
+		#self.pushFrontierOnToQueue(len(take), take)
 	
 
 	while self.listOfFrontiers.empty() == False:
@@ -229,7 +228,7 @@ class ExplorerNode(ExplorerNodeBase):
 		length = len(candidateFrontier)
 		angle = self.angleToTurnWeight(robotAngle, robotX, robotY, nextCellToGo)
 		distance = self.distanceToFrontierWeight(robotPose, nextCellToGo)
-		Weight = -1 * angle + 2 * distance + 4 * length
+		Weight = -1 * angle + 6 * distance + 4 * length
 		self.pushWeightedFrontierOnToQueue(Weight * (-1), candidateFrontier)
 	i = 0
 
@@ -240,21 +239,27 @@ class ExplorerNode(ExplorerNodeBase):
 			destination = self.findingMiddleCellOfAFrontier(isItTheHighestWeightedFrontier)
 			#self.updateTheCheckFrontierList(isItTheHighestWeightedFrontier)
 			i += 1
+			self.numberOfWaypoints += 1
+		elif destination == (3,38):
+			destination = isItTheHighestWeightedFrontier[0]
 		else:
 			self.pushFrontierOnToQueue(len(isItTheHighestWeightedFrontier), isItTheHighestWeightedFrontier)
+	
+	 
 		
-	while self.listOfFrontiers.empty() == False:
-		take = self.popFrontierFromQueue() 
-		self.temporaryTransfer.append(take)
-		self.pushTransfer(len(take), take)
+	#while self.listOfFrontiers.empty() == False:
+	#	take = self.popFrontierFromQueue() 
+	#	self.temporaryTransfer.append(take)
+	#	self.pushTransfer(len(take), take)
 	
 	#print('The Final list of Frontiers is :')
 	#print(self.temporaryTransfer)
 	#print(len(self.temporaryTransfer))
+	#self.temporaryTransfer = []
 	
-	while self.transferQueue.empty() == False:
-		take = self.popTransfer()
-		self.pushFrontierOnToQueue(len(take), take)
+	#while self.transferQueue.empty() == False:
+	#	take = self.popTransfer()
+	#	self.pushFrontierOnToQueue(len(take), take)
 		
       #lalalla
 	
