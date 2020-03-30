@@ -1,0 +1,6 @@
+set(comp0037_reactive_planner_controller_SETUP_PY_VERSION "1.0.0")
+set(comp0037_reactive_planner_controller_SETUP_PY_SCRIPTS "")
+set(comp0037_reactive_planner_controller_SETUP_PY_PACKAGES "comp0037_reactive_planner_controller")
+set(comp0037_reactive_planner_controller_SETUP_PY_PACKAGE_DIRS "src/comp0037_reactive_planner_controller")
+set(comp0037_reactive_planner_controller_SETUP_PY_MODULES "")
+set(comp0037_reactive_planner_controller_SETUP_PY_MODULE_DIRS "")

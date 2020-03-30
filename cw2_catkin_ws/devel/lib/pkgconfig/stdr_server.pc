@@ -1,0 +1,8 @@
+prefix=/home/ros_user/cw2_catkin_ws/devel
+
+Name: stdr_server
+Description: Description of stdr_server
+Version: 0.3.2
+Cflags: -I/home/ros_user/cw2_catkin_ws/src/comp0037/stdr_simulator/stdr_server/include
+Libs: -L/home/ros_user/cw2_catkin_ws/devel/lib -lstdr_map_loader
+Requires: roscpp tf nav_msgs stdr_msgs actionlib nodelet map_server visualization_msgs
