@@ -20,6 +20,9 @@ from comp0037_mapper.srv import *
 from bresenhamalgorithm import bresenham
 import time
 from math import log
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+
 # This class implements basic mapping capabilities. Given knowledge
 # about the robot's position and orientation, it processes laser scans
 # to produce a new occupancy grid. If this grid differs from the
@@ -28,7 +31,15 @@ from math import log
 class MapperNode(object):
 
     def __init__(self):
+
+	open("/home/ros_user/cw2_catkin_ws/src/comp0037/comp0037_mapper/src/comp0037_mapper/entropies.txt", "w").close()
+	open("/home/ros_user/cw2_catkin_ws/src/comp0037/comp0037_mapper/src/comp0037_mapper/time.txt", "w").close()
+	
+	
 	self.loopBeginTime = 0
+	self.updateTime = 0
+	self.listOfTimes = [0]
+	self.listOfEntropies = []
 
         # Get the ground truth map from stdr; we use this to figure out the dimensions of the map       
         rospy.init_node('mapper_node', anonymous=True)
@@ -296,13 +307,12 @@ class MapperNode(object):
     def updateVisualisation(self):
 	
 	if self.loopBeginTime == 0:
-		self.loopBeginTime = time.time()
+		self.loopBeginTime = rospy.get_time()
 
 	self.numberOfCellsInTheOccupancyGridIs = 0
 	self.numberOfWallCells = 0
 	
 	self.entropy = 0
-	
 
         # If anything has changed the state of the occupancy grids,
         # visualisationUpdateRequired is set to true. Therefore, the
@@ -332,40 +342,36 @@ class MapperNode(object):
             for y in range(0, self.occupancyGrid.getHeightInCells()):
 	    	candidate = (x, y)
 		
-		if self.occupancyGrid.getCell(candidate[0], candidate[1]) == 1 or self.occupancyGrid.getCell(candidate[0], candidate[1]) == 0:
-			self.numberOfCellsInTheOccupancyGridIs += 1
-			
-		if self.occupancyGrid.getCell(candidate[0], candidate[1]) == 1:
-			self.numberOfWallCells += 1
-		
 		if self.occupancyGrid.getCell(candidate[0], candidate[1]) == 0.5:
 			self.entropy += math.log(2)
 	
 
-	self.loopEndTime = time.time()	
+	self.loopEndTime = rospy.get_time()	
 
-	if self.loopEndTime - self.loopBeginTime > 5:
-
-		if self.numberOfCellsInTheOccupancyGridIs == 0 or self.numberOfWallCells == 0:
-			print('The probability does not exist')
-			self.loopBeginTime = 0
-			print(self.numberOfCellsInTheOccupancyGridIs)
-			print(self.numberOfWallCells)
-			pass
-		else:
-			probabilityOfWall = float(self.numberOfWallCells) / self.numberOfCellsInTheOccupancyGridIs
-			probabilityOfOpenCell = 1 - probabilityOfWall
-			entropyOfMap = - ( (probabilityOfOpenCell) * math.log(probabilityOfOpenCell) ) - ( probabilityOfWall * math.log(probabilityOfWall) )
-			print('The probability of a wall cell p(c = 1) is: ')
-			print(probabilityOfWall)
-			#print('The entropy of the map is: ')
-			#print(entropyOfMap)
+	if self.loopEndTime - self.loopBeginTime >= 5:
 
 			print('The entropy of the map is: ')
 			print(self.entropy)
-			print(self.numberOfCellsInTheOccupancyGridIs)
-			print(self.numberOfWallCells)
 			self.loopBeginTime = 0
+			self.listOfEntropies.append(self.entropy)
+			self.updateTime += self.loopEndTime - self.loopBeginTime
+			self.listOfTimes.append(self.updateTime)
+			e = open("/home/ros_user/cw2_catkin_ws/src/comp0037/comp0037_mapper/src/comp0037_mapper/entropies.txt", "a")
+			e.write(str(self.entropy) + '\n')
+			e.close()
+			t = open("/home/ros_user/cw2_catkin_ws/src/comp0037/comp0037_mapper/src/comp0037_mapper/time.txt", "a")
+			t.write(str(self.updateTime) + '\n')
+			t.write(str(self.listOfTimes) + '\n')
+			t.close()
+			
+			
+    
+    #def animate(self, time, entropies):
+	#xar = time
+	#yar = entropies
+	
+	#ax1.clear()
+	#ax1.plot(xar, yar)
 		
 		
 
@@ -392,6 +398,8 @@ class MapperNode(object):
         while not rospy.is_shutdown():
             self.updateVisualisation()
             rospy.sleep(0.1)
+
+
         
   
 
